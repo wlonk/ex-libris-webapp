@@ -46,6 +46,7 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     'ex_libris.users',  # custom users app
     # Your stuff: custom apps go here
+    'books',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
