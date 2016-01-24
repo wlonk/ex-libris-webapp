@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ book }}</h1>
+
+<ul>
+  <li>Author: {{ book.author }}</li>
+  <li>Publisher: {{ book.publisher }}</li>
+  <li>Series: {{ book.series }}</li>
+  <li>Edition: {{ book.edition }}</li>
+  <li>Year: {{ book.year }}</li>
+</ul>
+
+<p>
+  <a href="{{ book.dropbox_link }}">Dropbox link</a>.
+</p>
+{% endblock content %}
