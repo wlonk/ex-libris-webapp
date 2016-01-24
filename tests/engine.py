@@ -63,6 +63,15 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
             port=16379,
         )
 
+        self.services['Celery'] = hitchpython.CeleryService(
+            python=python_package.python,
+            app="ex_libris.taskapp", loglevel="INFO",
+            needs=[
+                self.services['Redis'], self.services['Django'],
+            ],
+            env_vars=self.settings['environment_variables'],
+        )
+
         self.services['Firefox'] = hitchselenium.SeleniumService(
             xvfb=self.settings.get("xvfb", False),
             no_libfaketime=True,

@@ -227,6 +227,10 @@ LOGIN_URL = 'account_login'
 # SLUGLIFIER
 AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 
+# CELERY
+INSTALLED_APPS += ('ex_libris.taskapp.celery.CeleryConfig',)
+BROKER_URL = env("CELERY_BROKER_URL", default='django://')
+# END CELERY
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
