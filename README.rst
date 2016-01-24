@@ -31,8 +31,7 @@ Test coverage
 
 To run the tests, check your test coverage, and generate an HTML coverage report::
 
-    $ coverage run manage.py test
-    $ coverage html
+    $ py.test --cov=. --cov-report=html ex_libris
     $ open htmlcov/index.html
 
 Live reloading and Sass CSS compilation
