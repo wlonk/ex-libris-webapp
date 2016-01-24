@@ -1,0 +1,8 @@
+machine:
+  python:
+    version: 3.5.0
+dependencies:
+  override:
+    - npm install
+    - pip install -r requirements/test.txt
+    - pip install -r requirements/local.txt
