@@ -15,6 +15,13 @@
       {% endif %}
     </div>
   </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <p>
+        <a href="{% url "books:list" %}">Books</a>.
+      </p>
+    </div>
+  </div>
 
 {% if object == request.user %}
 <!-- Action buttons -->

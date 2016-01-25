@@ -3,7 +3,6 @@ ex-libris
 
 Manage your RPG PDFs.
 
-
 LICENSE: BSD
 
 Settings
@@ -32,8 +31,7 @@ Test coverage
 
 To run the tests, check your test coverage, and generate an HTML coverage report::
 
-    $ coverage run manage.py test
-    $ coverage html
+    $ py.test --cov=. --cov-report=html ex_libris
     $ open htmlcov/index.html
 
 Live reloading and Sass CSS compilation
@@ -43,14 +41,21 @@ Moved to `Live reloading and SASS compilation`_.
 
 .. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.org/en/latest/live-reloading-and-sass-compilation.html
 
+Celery
+^^^^^^
 
+This app comes with Celery.
 
+To run a celery worker:
 
+.. code-block:: bash
 
+    cd {{cookiecutter.repo_name}}
+    celery -A {{cookiecutter.repo_name}}.taskapp worker -l info
 
+Please note: For Celerys import magic to work, it is important *where* the celery commands are run. If you are in the same folder with *manage.py*, you should be right.
 
 It's time to write the code!!!
-
 
 Running end to end integration tests
 ------------------------------------
@@ -74,7 +79,6 @@ This will download and compile python, postgres and redis and install all python
 Subsequent test runs will be much quicker.
 
 The testing framework runs Django, Celery (if enabled), Postgres, HitchSMTP (a mock SMTP server), Firefox/Selenium and Redis.
-
 
 Deployment
 ----------

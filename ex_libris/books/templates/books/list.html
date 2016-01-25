@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table class="table table-striped">
+  <thead>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Publisher</th>
+    <th>Series</th>
+    <th>Edition</th>
+    <th>Year</th>
+  </thead>
+  <tbody>
+{% for book in books %}
+    <tr>
+      {# TODO use generic app namespace name in url tag? #}
+      <td><a href="{% url "books:detail" id=book.id %}">{{ book }}</a></td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.publisher }}</td>
+      <td>{{ book.series }}</td>
+      <td>{{ book.edition }}</td>
+      <td>{{ book.year }}</td>
+    </tr>
+{% empty %}
+    <tr>
+      <td>No books</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+{% endblock content %}

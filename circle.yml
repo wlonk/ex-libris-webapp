@@ -6,3 +6,6 @@ dependencies:
     - npm install
     - pip install -r requirements/test.txt
     - pip install -r requirements/local.txt
+test:
+  override:
+    - py.test --cov=. ex_libris

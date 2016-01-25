@@ -1,4 +1,4 @@
-{% load staticfiles i18n %}<!DOCTYPE html>
+{% load staticfiles i18n socialaccount %}<!DOCTYPE html>
 <html lang="en" ng-app>
   <head>
     <meta charset="utf-8">
@@ -32,7 +32,7 @@
   <body>
 
     <div class="m-b">
-      <nav class="navbar navbar-dark navbar-static-top bg-inverse">
+      <nav class="navbar navbar-dark navbar-static-top navbar-full bg-inverse">
         <div class="container">
           <a class="navbar-brand" href="/">ex-libris</a>
           <button type="button" class="navbar-toggler hidden-sm-up pull-xs-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
@@ -60,10 +60,10 @@
                 </li>
               {% else %}
                 <li class="nav-item">
-                  <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
-                </li>
-                <li class="nav-item">
-                  <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Log In" %}</a>
+                  <a id="log-in-link" class="nav-link" href="{% provider_login_url "custom_dropbox_oauth2" process="login" %}">
+                    <img class="inline-image" alt="Dropbox" src="{% static "images/dropbox_glyph_blue.png" %}">
+                    {% trans "Log In" %}
+                  </a>
                 </li>
               {% endif %}
             </ul>
@@ -82,9 +82,6 @@
 
       {% block content %}
         <p>Use this document as a way to quick start any new project.</p>
-        <p>
-            <a href="{% url "books:list" %}">Books</a>.
-        </p>
       {% endblock content %}
 
     </div> <!-- /container -->
@@ -111,4 +108,3 @@
     {% endblock javascript %}
   </body>
 </html>
- 

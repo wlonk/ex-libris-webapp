@@ -19,7 +19,10 @@ TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
-SECRET_KEY = env("DJANGO_SECRET_KEY", default='zekhp_vcz-xn3r6g3anbym0abygu5nhrg%5fnoo8f-0x)nbn7&')
+SECRET_KEY = env(
+    "DJANGO_SECRET_KEY",
+    default='zekhp_vcz-xn3r6g3anbym0abygu5nhrg%5fnoo8f-0x)nbn7&',
+)
 
 # Mail settings
 # ------------------------------------------------------------------------------
@@ -58,5 +61,11 @@ INSTALLED_APPS += ('django_extensions', )
 # TESTING
 # ------------------------------------------------------------------------------
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
+# CELERY
+# In development, all tasks will be executed locally by blocking until the task
+# returns
+CELERY_ALWAYS_EAGER = True
+# END CELERY
 
 # Your local stuff: Below this line define 3rd party library settings

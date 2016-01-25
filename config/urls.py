@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
-    url(r'^books/', include('books.urls', namespace='books')),
+    url(r'^books/', include('ex_libris.books.urls', namespace='books')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

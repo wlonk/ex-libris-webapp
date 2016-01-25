@@ -1,11 +1,14 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import (
     get_object_or_404,
     render,
 )
 
+
 from .models import Book
 
 
+@login_required
 def list(request):
     return render(
         request,
@@ -16,6 +19,7 @@ def list(request):
     )
 
 
+@login_required
 def detail(request, id):
     return render(
         request,
