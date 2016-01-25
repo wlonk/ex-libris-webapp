@@ -62,3 +62,11 @@ class Book(models.Model):
         self.dropbox_sharing_link = sharing_link
         self.save()
         return sharing_link
+
+
+class BookProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    import_root = models.CharField(max_length=64)
