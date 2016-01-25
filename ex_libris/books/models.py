@@ -1,7 +1,13 @@
 import datetime
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from taggit.managers import TaggableManager
+from allauth.account.signals import user_signed_up
+
+from .utils import (
+    get_dropbox_sharing_link,
+)
 
 
 YEAR_CHOICES = []
@@ -54,15 +60,25 @@ class Book(models.Model):
     def dropbox_link(self):
         if self.dropbox_sharing_link:
             return self.dropbox_sharing_link
-        import dropbox
-        from django.contrib.auth import get_user_model
-        User = get_user_model()
-        from .utils import get_access_token_for_user
-        user = User.objects.first()
-        access_token = get_access_token_for_user(user)
-        dbx = dropbox.Dropbox(access_token)
-        path = dbx.files_get_metadata(self.dropbox_id).path_lower
-        foo = dbx.sharing_create_shared_link(path).url
-        self.dropbox_sharing_link = foo
+        sharing_link = get_dropbox_sharing_link(self.owner, self.dropbox_id)
+        self.dropbox_sharing_link = sharing_link
         self.save()
-        return foo
+        return sharing_link
+
+
+class BookProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    import_root = models.CharField(max_length=64)
+
+
+def ensure_book_profile(request, user, **kwargs):
+    try:
+        user.bookprofile
+    except ObjectDoesNotExist:
+        BookProfile.objects.create(user=user)
+
+
+user_signed_up.connect(ensure_book_profile)

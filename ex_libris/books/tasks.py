@@ -15,9 +15,8 @@ User = get_user_model()
 def sync_dropbox(user):
     access_token = get_access_token_for_user(user)
     dbx = dropbox.Dropbox(access_token)
-    # TODO hardcoded /RPGs for my purposes. Need to scope to make things
-    # tolerably fast.
-    entries = find_all_files_of_type(dbx, 'pdf', '/RPGs')
+    profile = user.bookprofile or 'ex-libris'
+    entries = find_all_files_of_type(dbx, 'pdf', profile.import_root)
     for entry in entries:
         Book.objects.get_or_create(
             dropbox_id=entry.id,

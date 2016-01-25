@@ -1,7 +1,8 @@
 import os.path
 
-import dropbox as dropbox_api
+from django.contrib.auth import get_user_model
 
+import dropbox
 
 def extension_matches(extension, name):
     name, ext = os.path.splitext(name)
@@ -9,7 +10,7 @@ def extension_matches(extension, name):
 
 
 def is_folder(entry):
-    return isinstance(entry, dropbox_api.files.FolderMetadata)
+    return isinstance(entry, dropbox.files.FolderMetadata)
 
 
 def find_all_files_of_type(dbx, extension, root=''):
@@ -35,3 +36,10 @@ def get_access_token_for_user(user):
         .first()
         .token
     )
+
+
+def get_dropbox_sharing_link(user, dropbox_id):
+    access_token = get_access_token_for_user(user)
+    dbx = dropbox.Dropbox(access_token)
+    path = dbx.files_get_metadata(dropbox_id).path_lower
+    return dbx.sharing_create_shared_link(path).url

@@ -50,10 +50,9 @@ To run a celery worker:
 
 .. code-block:: bash
 
-    cd {{cookiecutter.repo_name}}
-    celery -A {{cookiecutter.repo_name}}.taskapp worker -l info
+    celery -A ex_libris.taskapp worker -l info
 
-Please note: For Celerys import magic to work, it is important *where* the celery commands are run. If you are in the same folder with *manage.py*, you should be right.
+Please note: For Celery's import magic to work, it is important *where* the celery commands are run. If you are in the same folder with *manage.py*, you should be right.
 
 It's time to write the code!!!
 
