@@ -1,7 +1,9 @@
 import datetime
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from taggit.managers import TaggableManager
+from allauth.account.signals import user_signed_up
 
 from .utils import (
     get_dropbox_sharing_link,
@@ -70,3 +72,13 @@ class BookProfile(models.Model):
         on_delete=models.CASCADE,
     )
     import_root = models.CharField(max_length=64)
+
+
+def ensure_book_profile(request, user, **kwargs):
+    try:
+        user.bookprofile
+    except ObjectDoesNotExist:
+        BookProfile.objects.create(user=user)
+
+
+user_signed_up.connect(ensure_book_profile)

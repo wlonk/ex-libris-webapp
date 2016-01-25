@@ -21,6 +21,12 @@
         Place any books you want to be visible in a folder in your Dropbox called <tt>ex-libris</tt>.
       </p>
       <p>
+        <form action="{% url "books:trigger_dropbox_sync" %}" method="post">
+          {% csrf_token %}
+          <input class="btn btn-default" type="submit" value="import">
+        </form>
+      </p>
+      <p>
         <a href="{% url "books:list" %}">Books</a>.
       </p>
     </div>
