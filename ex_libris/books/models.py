@@ -3,6 +3,10 @@ from django.conf import settings
 from django.db import models
 from taggit.managers import TaggableManager
 
+from .utils import (
+    get_dropbox_sharing_link,
+)
+
 
 YEAR_CHOICES = []
 
@@ -54,15 +58,7 @@ class Book(models.Model):
     def dropbox_link(self):
         if self.dropbox_sharing_link:
             return self.dropbox_sharing_link
-        import dropbox
-        from django.contrib.auth import get_user_model
-        User = get_user_model()
-        from .utils import get_access_token_for_user
-        user = User.objects.first()
-        access_token = get_access_token_for_user(user)
-        dbx = dropbox.Dropbox(access_token)
-        path = dbx.files_get_metadata(self.dropbox_id).path_lower
-        foo = dbx.sharing_create_shared_link(path).url
-        self.dropbox_sharing_link = foo
+        sharing_link = get_dropbox_sharing_link(self.owner, self.dropbox_id)
+        self.dropbox_sharing_link = sharing_link
         self.save()
-        return foo
+        return sharing_link
