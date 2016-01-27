@@ -23,3 +23,11 @@
 
 img.inline-image {
   height: 1em; }
+
+table {
+  table-layout: fixed; }
+  table th, table td {
+    width: 15%;
+    overflow: auto; }
+  table th:first-child, table td:first-child {
+    width: 25%; }
