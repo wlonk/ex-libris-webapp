@@ -9,6 +9,7 @@ from django.shortcuts import (
 
 
 from .models import Book
+from .forms import BookForm
 
 
 @login_required
@@ -24,11 +25,24 @@ def list(request):
 
 @login_required
 def detail(request, id):
+    book = get_object_or_404(Book, id=id)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            messages.add_message(
+                request,
+                messages.INFO,
+                "Success!",
+            )
+    else:
+        form = BookForm(instance=book)
     return render(
         request,
         "books/detail.html",
         {
-            "book": get_object_or_404(Book, id=id),
+            "book": book,
+            "form": form,
         }
     )
 

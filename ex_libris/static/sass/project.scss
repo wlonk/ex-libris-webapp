@@ -53,3 +53,16 @@ $red: #b94a48;
 img.inline-image {
   height: 1em;
 }
+
+table {
+  table-layout: fixed;
+
+  th, td {
+    width: 15%;
+    overflow: auto;
+  }
+
+  th:first-child, td:first-child {
+    width: 25%;
+  }
+}

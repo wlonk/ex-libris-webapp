@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <h1>{{ book }}</h1>
@@ -14,4 +15,10 @@
 <p>
   <a href="{{ book.dropbox_link }}">Dropbox link</a>.
 </p>
+
+<form method='post' action='.'>
+  {% csrf_token %}
+  {{ form|crispy }}
+  <input type="submit">
+</form>
 {% endblock content %}

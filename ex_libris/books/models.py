@@ -47,6 +47,7 @@ class Book(models.Model):
     year = models.IntegerField(
         choices=YEAR_CHOICES,
         null=True,
+        blank=True,
     )
 
     dropbox_id = models.CharField(max_length=256, default='')
