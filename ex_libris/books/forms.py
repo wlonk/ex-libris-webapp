@@ -62,3 +62,30 @@ class BookForm(forms.ModelForm):
             setattr(obj, field, instance)
         obj.save()
         return obj
+
+
+class BookFilterForm(forms.Form):
+    title__icontains = forms.CharField(
+        required=False,
+        label='Title',
+    )
+    edition__icontains = forms.CharField(
+        required=False,
+        label='Edition',
+    )
+    year__icontains = forms.CharField(
+        required=False,
+        label='Year',
+    )
+    author__name__icontains = forms.CharField(
+        required=False,
+        label='Author',
+    )
+    publisher__name__icontains = forms.CharField(
+        required=False,
+        label='Publisher',
+    )
+    series__name__icontains = forms.CharField(
+        required=False,
+        label='Series',
+    )
