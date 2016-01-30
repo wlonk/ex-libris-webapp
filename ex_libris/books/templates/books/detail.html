@@ -1,24 +1,49 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% block navbar_extra %}
+<li class="nav-item">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-modal">
+    Edit
+  </button>
+</li>
+{% endblock navbar_extra %}
+
 {% block content %}
+<div id="edit-modal" class="modal fade">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method='post' action='.'>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Edit</h4>
+        </div>
+        <div class="modal-body">
+          {% csrf_token %}
+          {{ form|crispy }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" value="Save" class="btn btn-primary">
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <h1>{{ book }}</h1>
 
 <ul>
   <li>Author: {{ book.author }}</li>
   <li>Publisher: {{ book.publisher }}</li>
   <li>Series: {{ book.series }}</li>
-  <li>Edition: {{ book.edition }}</li>
+  <li>Edition: {{ book.edition|default:"None" }}</li>
   <li>Year: {{ book.year }}</li>
 </ul>
 
 <p>
   <a href="{{ book.dropbox_link }}">Dropbox link</a>.
 </p>
-
-<form method='post' action='.'>
-  {% csrf_token %}
-  {{ form|crispy }}
-  <input type="submit">
-</form>
 {% endblock content %}
