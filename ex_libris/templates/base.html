@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{% block title %}ex-libris{% endblock title %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -53,6 +53,8 @@
                 <a class="nav-link" href="{% url 'books:list' %}">Books</a>
               </li>
               {% endif %}
+              {% block navbar_extra %}
+              {% endblock navbar_extra %}
             </ul>
 
             <ul class="nav navbar-nav pull-xs-right">
