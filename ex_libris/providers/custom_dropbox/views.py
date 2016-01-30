@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from allauth.socialaccount.providers.oauth2.views import (
     OAuth2Adapter,
     OAuth2LoginView,
@@ -13,6 +15,10 @@ class CustomDropboxOAuth2Adapter(OAuth2Adapter):
     access_token_url = 'https://api.dropbox.com/1/oauth2/token'
     authorize_url = 'https://www.dropbox.com/1/oauth2/authorize'
     profile_url = 'https://api.dropbox.com/1/account/info'
+    if settings.SECURE_PROXY_SSL_HEADER:
+        redirect_uri_protocol = 'https'
+    else:
+        redirect_uri_protocol = 'http'
 
     def complete_login(self, request, app, token, **kwargs):
         extra_data = requests.get(self.profile_url, params={
