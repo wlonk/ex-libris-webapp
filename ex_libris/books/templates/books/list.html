@@ -49,7 +49,7 @@
       <td>{{ book.author }}</td>
       <td>{{ book.publisher }}</td>
       <td>{{ book.series }}</td>
-      <td>{{ book.edition }}</td>
+      <td>{{ book.edition|default:"None" }}</td>
       <td>{{ book.year }}</td>
     </tr>
 {% empty %}

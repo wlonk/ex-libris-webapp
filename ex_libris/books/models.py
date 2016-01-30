@@ -38,6 +38,15 @@ class Series(models.Model):
 
 
 class Book(models.Model):
+    class Meta:
+        ordering = (
+            'series__name',
+            'publisher__name',
+            'author__name',
+            'title',
+            'year',
+        )
+
     title = models.CharField(max_length=256)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     author = models.ForeignKey(Author, null=True)
