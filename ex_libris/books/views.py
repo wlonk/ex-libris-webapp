@@ -7,18 +7,30 @@ from django.shortcuts import (
     render,
 )
 
+from pure_pagination import (
+    Paginator,
+    PageNotAnInteger,
+)
 
-from .models import Book
+from . import tasks
 from .forms import BookForm
+from .models import Book
 
 
 @login_required
 def list(request):
+    try:
+        page = request.GET.get('page', 1)
+    except PageNotAnInteger:
+        page = 1
+    objects = Book.objects.filter(owner=request.user)
+    p = Paginator(objects, 10, request=request)
+    books = p.page(page)
     return render(
         request,
         "books/list.html",
         {
-            "books": Book.objects.all(),
+            "books": books,
         }
     )
 
@@ -52,7 +64,6 @@ def detail(request, id):
 @login_required
 def trigger_dropbox_sync(request):
     if request.method == 'POST':
-        from . import tasks
         tasks.sync_dropbox.delay(request.user)
         messages.add_message(
             request,

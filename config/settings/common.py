@@ -41,6 +41,7 @@ THIRD_PARTY_APPS = (
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
     'taggit',
+    'pure_pagination',
 )
 
 # Apps specific for this project go here.
@@ -249,5 +250,11 @@ BROKER_URL = env("CELERY_BROKER_URL", default='django://')
 ADMIN_URL = r'^admin/'
 
 # Your common stuff: Below this line define 3rd party library settings
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 5,
+    'MARGIN_PAGES_DISPLAYED': 2,
+    'SHOW_FIRST_PAGE_WHEN_INVALID': False,
+}
+
 DROPBOX_API_KEY = env.str('DROPBOX_API_KEY')
 DROPBOX_API_SECRET = env.str('DROPBOX_API_SECRET')
