@@ -88,9 +88,27 @@
       {% endif %}
 
       {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
+      <div class="jumbotron text-xs-center">
+        <h1 class="display-3">
+          Ex Libris
+        </h1>
+        <p class="lead">
+          Manage your library, right from your Dropbox.
+        </p>
+        <p>
+          <a href="{% provider_login_url "custom_dropbox_oauth2" process="login" %}" class="btn btn-lg btn-primary" role="button">Log in via Dropbox</a>
+        </p>
+        <p class="col-xs-6 col-xs-offset-3">
+          <small class="text-muted">
+            Right now, we're in alpha, and only can
+            deal with PDF files in Dropbox. Sorry!
+            We're working on expanding and improving
+            what we offer, though.
+          </small>
+        </p>
+        <div class="clearfix"></div>
+      </div>
       {% endblock content %}
-
     </div> <!-- /container -->
 
     {% block modal %}{% endblock modal %}
