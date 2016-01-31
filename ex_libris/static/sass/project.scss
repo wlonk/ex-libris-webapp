@@ -66,3 +66,28 @@ table {
     width: 25%;
   }
 }
+
+@mixin rotate($deg) {
+  -webkit-transform: rotate($deg);
+     -moz-transform: rotate($deg);
+      -ms-transform: rotate($deg);
+       -o-transform: rotate($deg);
+          transform: rotate($deg);
+}
+
+.navbar-brand {
+  .release {
+    color: #f00;
+    display: inline-block;
+    position: relative;
+    top: -0.5rem;
+    left: -1rem;
+    font-size: smaller;
+
+    @include rotate(15deg);
+  }
+}
+
+.small-caps {
+  font-variant: small-caps;
+}

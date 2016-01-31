@@ -5,48 +5,30 @@
 
 {% block content %}
 <div class="container">
-
   <div class="row">
     <div class="col-sm-12">
-
-      <h2>{{ object.username }}</h2>
-      {% if object.name %}
-        <p>{{ object.name }}</p>
-      {% endif %}
+      <h1>{{ object.username }}</h1>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
+      <h2>Instructions</h2>
       <p>
-        Place any books you want to be visible in a folder in your Dropbox called <tt>ex-libris</tt>.
+        Place any books that you want to be visible in a folder in your Dropbox
+        called <tt>ex-libris</tt>.
+      </p>
+      <p>
+        We don't yet auto-sync, so you'll end up getting really familiar with
+        this button.
       </p>
       <p>
         <form action="{% url "books:trigger_dropbox_sync" %}" method="post">
           {% csrf_token %}
-          <input class="btn btn-default" type="submit" value="import">
+          <input class="btn btn-primary" type="submit" value="import">
         </form>
-      </p>
-      <p>
-        <a href="{% url "books:list" %}">Books</a>.
       </p>
     </div>
   </div>
-
-{% if object == request.user %}
-<!-- Action buttons -->
-<div class="row">
-
-  <div class="col-sm-12 ">
-    <a class="btn btn-primary" href="{% url 'users:update' %}">My Info</a>
-    <a class="btn btn-primary" href="{% url 'account_email' %}">E-Mail</a>
-    <!-- Your Stuff: Custom user template urls -->
-  </div>
-
-</div>
-<!-- End Action buttons -->
-{% endif %}
-
-
 </div>
 {% endblock content %}
 
