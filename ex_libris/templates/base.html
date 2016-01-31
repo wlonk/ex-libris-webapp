@@ -34,7 +34,7 @@
     <div class="m-b">
       <nav class="navbar navbar-dark navbar-static-top navbar-full bg-inverse">
         <div class="container">
-          <a class="navbar-brand" href="/">ex-libris</a>
+          <a class="navbar-brand" href="{% url "home" %}">Ex Libris<span class="release">αlpha</span></a>
           <button type="button" class="navbar-toggler hidden-sm-up pull-xs-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
             &#9776;
           </button>
@@ -42,9 +42,6 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-toggleable-xs" id="bs-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}">Home</a>
-              </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'about' %}">About</a>
               </li>

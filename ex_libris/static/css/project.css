@@ -31,3 +31,19 @@ table {
     overflow: auto; }
   table th:first-child, table td:first-child {
     width: 25%; }
+
+.navbar-brand .release {
+  color: #f00;
+  display: inline-block;
+  position: relative;
+  top: -0.5rem;
+  left: -1rem;
+  font-size: smaller;
+  -webkit-transform: rotate(15deg);
+  -moz-transform: rotate(15deg);
+  -ms-transform: rotate(15deg);
+  -o-transform: rotate(15deg);
+  transform: rotate(15deg); }
+
+.small-caps {
+  font-variant: small-caps; }
