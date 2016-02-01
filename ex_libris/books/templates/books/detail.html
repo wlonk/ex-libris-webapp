@@ -46,4 +46,14 @@
 <p>
   <a href="{{ book.dropbox_link }}">Dropbox link</a>.
 </p>
+
+<ul>
+  {% for tag in book.tags.all %}
+  <li>
+    <a class="label label-pill label-primary" href="{% url "books:tags" tag=tag %}">{{ tag }}</a>
+  </li>
+  {% empty %}
+  <li>No tags</li>
+  {% endfor %}
+</ul>
 {% endblock content %}
