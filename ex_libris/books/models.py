@@ -17,21 +17,30 @@ for r in range(1980, (datetime.datetime.now().year+1)):
 
 
 class Author(models.Model):
-    name = models.CharField(max_length=256)
+    name = models.CharField(
+        max_length=256,
+        verbose_name='Author Name',
+    )
 
     def __str__(self):
         return "{s.name}".format(s=self)
 
 
 class Publisher(models.Model):
-    name = models.CharField(max_length=256)
+    name = models.CharField(
+        max_length=256,
+        verbose_name='Publisher Name',
+    )
 
     def __str__(self):
         return "{s.name}".format(s=self)
 
 
 class Series(models.Model):
-    name = models.CharField(max_length=256)
+    name = models.CharField(
+        max_length=256,
+        verbose_name='Series Name',
+    )
 
     def __str__(self):
         return "{s.name}".format(s=self)
