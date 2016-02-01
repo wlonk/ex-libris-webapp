@@ -18,6 +18,30 @@ from .forms import BookForm
 from .models import Book
 
 
+# TODO this is code duplicationtastic. Abstract these two into a CBV, override a
+# queryset attribute as appropriate.
+@login_required
+def tags(request, tag):
+    try:
+        page = request.GET.get('page', 1)
+    except PageNotAnInteger:
+        page = 1
+    objects = BookFilter(
+        request.GET,
+        queryset=Book.objects.filter(owner=request.user).filter(tags__name=tag),
+    )
+    p = Paginator(objects, 10, request=request)
+    books = p.page(page)
+    return render(
+        request,
+        "books/list.html",
+        {
+            "books": books,
+            "filter": objects,
+        }
+    )
+
+
 @login_required
 def list(request):
     try:

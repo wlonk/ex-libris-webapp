@@ -24,13 +24,13 @@
 img.inline-image {
   height: 1em; }
 
-table {
+table.books {
   table-layout: fixed; }
-  table th, table td {
-    width: 15%;
+  table.books th, table.books td {
+    width: 12%;
     overflow: auto; }
-  table th:first-child, table td:first-child {
-    width: 25%; }
+  table.books th:first-child, table.books td:first-child {
+    width: 28%; }
 
 .navbar-brand .release {
   color: #f00;

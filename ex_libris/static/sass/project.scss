@@ -54,16 +54,16 @@ img.inline-image {
   height: 1em;
 }
 
-table {
+table.books {
   table-layout: fixed;
 
   th, td {
-    width: 15%;
+    width: 12%;
     overflow: auto;
   }
 
   th:first-child, td:first-child {
-    width: 25%;
+    width: 28%;
   }
 }
 

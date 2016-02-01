@@ -46,6 +46,7 @@ class BookForm(forms.ModelForm):
             'author_name',
             'publisher_name',
             'series_name',
+            'tags',
         )
 
     def save(self, *args, **kwargs):
