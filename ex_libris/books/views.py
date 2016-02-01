@@ -14,10 +14,7 @@ from pure_pagination import (
 
 from . import tasks
 from .filters import BookFilter
-from .forms import (
-    BookForm,
-    BookFilterForm,
-)
+from .forms import BookForm
 from .models import Book
 
 
@@ -33,13 +30,12 @@ def list(request):
     )
     p = Paginator(objects, 10, request=request)
     books = p.page(page)
-    filter_form = BookFilterForm(request.GET)
     return render(
         request,
         "books/list.html",
         {
             "books": books,
-            "filter_form": filter_form,
+            "filter": objects,
         }
     )
 
