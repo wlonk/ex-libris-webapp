@@ -1,7 +1,9 @@
 import datetime
+
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
+
 from taggit.managers import TaggableManager
 from allauth.account.signals import user_signed_up
 
