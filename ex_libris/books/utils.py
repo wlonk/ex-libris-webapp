@@ -1,8 +1,7 @@
 import os.path
 
-from django.contrib.auth import get_user_model
-
 import dropbox
+
 
 def extension_matches(extension, name):
     name, ext = os.path.splitext(name)
