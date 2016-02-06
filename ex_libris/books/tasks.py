@@ -15,8 +15,8 @@ User = get_user_model()
 def sync_dropbox(user):
     access_token = get_access_token_for_user(user)
     dbx = dropbox.Dropbox(access_token)
-    profile = user.bookprofile.import_root or 'ex-libris'
-    entries = find_all_files_of_type(dbx, 'pdf', profile.import_root)
+    profile = user.bookprofile.import_root or '/ex-libris'
+    entries = find_all_files_of_type(dbx, 'pdf', profile)
     for entry in entries:
         Book.objects.get_or_create(
             dropbox_id=entry.id,
