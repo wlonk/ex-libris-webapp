@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block title %}User: {{ object.username }}{% endblock %}
 
@@ -10,25 +11,27 @@
       <h1>{{ object.username }}</h1>
     </div>
   </div>
+  {% if is_self %}
   <div class="row">
     <div class="col-sm-12">
-      <h2>Instructions</h2>
       <p>
-        Place any books that you want to be visible in a folder in your Dropbox
-        called <tt>ex-libris</tt>.
+        What folder do you want us to import your PDFs from?
       </p>
       <p>
-        We don't yet auto-sync, so you'll end up getting really familiar with
-        this button.
+        (We don't yet auto-sync, so every time you add a book, you'll have to
+        click "import" again. You'll end up getting really familiar with this
+        button.)
       </p>
       <p>
         <form action="{% url "books:trigger_dropbox_sync" %}" method="post">
           {% csrf_token %}
+          {{ book_profile_form|crispy }}
           <input class="btn btn-primary" type="submit" value="import">
         </form>
       </p>
     </div>
   </div>
+  {% endif %}
 </div>
 {% endblock content %}
 

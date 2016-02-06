@@ -5,6 +5,7 @@ from .models import (
     Publisher,
     Series,
     Book,
+    BookProfile,
 )
 
 
@@ -63,3 +64,11 @@ class BookForm(forms.ModelForm):
             setattr(obj, field, instance)
         obj.save()
         return obj
+
+
+class BookProfileForm(forms.ModelForm):
+    class Meta:
+        model = BookProfile
+        fields = (
+            'import_root',
+        )

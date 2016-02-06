@@ -92,7 +92,11 @@ class BookProfile(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    import_root = models.CharField(max_length=64)
+    import_root = models.CharField(max_length=64, blank=True)
+
+    def clean(self):
+        if self.import_root and not self.import_root.startswith('/'):
+            self.import_root = "/" + self.import_root
 
 
 def ensure_book_profile(request, user, **kwargs):

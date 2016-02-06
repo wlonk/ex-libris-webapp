@@ -1,7 +1,13 @@
+import json
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
+from django.http import (
+    HttpResponseBadRequest,
+    HttpResponseNotAllowed,
+    HttpResponseRedirect,
+)
 from django.shortcuts import (
     get_object_or_404,
     render,
@@ -14,7 +20,10 @@ from pure_pagination import (
 
 from . import tasks
 from .filters import BookFilter
-from .forms import BookForm
+from .forms import (
+    BookForm,
+    BookProfileForm,
+)
 from .models import Book
 
 
@@ -93,17 +102,25 @@ def detail(request, id):
 @login_required
 def trigger_dropbox_sync(request):
     if request.method == 'POST':
-        tasks.sync_dropbox.delay(request.user)
-        messages.add_message(
-            request,
-            messages.INFO,
-            "We've kicked off your import! It'll take a while, be patient.",
-        )
-        response = HttpResponse('', status=302)
-        response['Location'] = request.build_absolute_uri(
-            reverse('books:list')
-        )
+        form = BookProfileForm(request.POST, instance=request.user.bookprofile)
+        if form.is_valid():
+            form.save()
+            tasks.sync_dropbox.delay(request.user)
+            messages.add_message(
+                request,
+                messages.INFO,
+                "We've kicked off your import! It'll take a while, be patient.",
+            )
+            response = HttpResponseRedirect(
+                request.build_absolute_uri(
+                    reverse('books:list')
+                )
+            )
+        else:
+            response = HttpResponseBadRequest(
+                json.dumps(form.errors),
+                content_type='application/json',
+            )
     else:
-        response = HttpResponse('', status=405)
-        response['Allow'] = 'POST'
+        response = HttpResponseNotAllowed(['POST'])
     return response
