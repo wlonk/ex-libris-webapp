@@ -27,10 +27,14 @@ img.inline-image {
 table.books {
   table-layout: fixed; }
   table.books th, table.books td {
-    width: 12%;
+    width: 15%;
     overflow: auto; }
   table.books th:first-child, table.books td:first-child {
-    width: 28%; }
+    width: 25%; }
+  table.books td {
+    border-top: none; }
+  table.books td.tags {
+    text-align: right; }
 
 .navbar-brand .release {
   color: #f00;
@@ -50,3 +54,6 @@ table.books {
 
 #filter-modal .help-block {
   display: none; }
+
+tbody.odd {
+  background-color: #f9f9f9; }

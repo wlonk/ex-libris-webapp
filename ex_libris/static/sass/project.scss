@@ -58,12 +58,20 @@ table.books {
   table-layout: fixed;
 
   th, td {
-    width: 12%;
+    width: 15%;
     overflow: auto;
   }
 
   th:first-child, td:first-child {
-    width: 28%;
+    width: 25%;
+  }
+
+  td {
+    border-top: none;
+  }
+
+  td.tags {
+    text-align: right;
   }
 }
 
@@ -96,4 +104,8 @@ table.books {
   .help-block {
     display: none;
   }
+}
+
+tbody.odd {
+  background-color: #f9f9f9;
 }
