@@ -32,7 +32,7 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<table class="table table-striped books">
+<table class="table books">
   <thead>
     <th>Title</th>
     <th>Author</th>
@@ -40,34 +40,35 @@
     <th>Series</th>
     <th>Edition</th>
     <th>Year</th>
-    <th>Tags</th>
   </thead>
-  <tbody>
 {% for book in books.object_list %}
+  <tbody class="{% cycle "odd" "even" %}">
     <tr>
       {# TODO use generic app namespace name in url tag? #}
       <td><a href="{% url "books:detail" id=book.id %}">{{ book }}</a></td>
-      <td>{{ book.author }}</td>
-      <td>{{ book.publisher }}</td>
-      <td>{{ book.series }}</td>
-      <td>{{ book.edition|default:"None" }}</td>
-      <td>{{ book.year }}</td>
-      <td>
-        <ul class="list-unstyled">
-        {% for tag in book.tags.all %}
-        <li>
-          <a href="{% url "books:tags" tag=tag %}" class="label label-pill label-primary">{{ tag }}</a>
-        </li>
-        {% endfor %}
-        </ul>
+      <td>{{ book.author|default:"" }}</td>
+      <td>{{ book.publisher|default:"" }}</td>
+      <td>{{ book.series|default:"" }}</td>
+      <td>{{ book.edition }}</td>
+      <td>{{ book.year|default:"" }}</td>
+    </tr>
+    {% if book.tags.all %}
+    <tr>
+      <td colspan="6" class="tags">
+          {% for tag in book.tags.all %}
+            <a href="{% url "books:tags" tag=tag %}" class="label label-pill label-primary">{{ tag }}</a>
+          {% endfor %}
       </td>
     </tr>
+    {% endif %}
+  </tbody>
 {% empty %}
+  <tbody>
     <tr>
       <td colspan="6">No books</td>
     </tr>
-{% endfor %}
   </tbody>
+{% endfor %}
 </table>
 
 <nav class="text-xs-center">
