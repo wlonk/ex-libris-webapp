@@ -1,5 +1,22 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block javascript_extra %}
+<script src="{% static 'js/jquery.jeditable.js' %}" type="text/javascript"></script>
+
+<script>  
+$(document).ready(function() {
+
+     $('.editable').editable('{% url "books:detail" id="0" %}', {
+         onblur     : 'submit',
+         placeholder: ''
+
+     });
+});
+</script>
+
+{% endblock javascript_extra %}
 
 {% block navbar_extra %}
 <li class="nav-item">
@@ -42,15 +59,15 @@
     <th>Year</th>
   </thead>
 {% for book in books.object_list %}
-  <tbody class="{% cycle "odd" "even" %}">
+  <tbody class="{% cycle "odd" "even" %}"> {# #}
     <tr>
       {# TODO use generic app namespace name in url tag? #}
-      <td><a href="{% url "books:detail" id=book.id %}">{{ book }}</a></td>
-      <td>{{ book.author|default:"" }}</td>
-      <td>{{ book.publisher|default:"" }}</td>
-      <td>{{ book.series|default:"" }}</td>
-      <td>{{ book.edition }}</td>
-      <td>{{ book.year|default:"" }}</td>
+      <td class="editable"><a href="{% url "books:detail" id=book.id %}">{{ book }}</a></td>
+      <td class="editable">{{ book.author|default:"" }}</td>
+      <td class="editable">{{ book.publisher|default:"" }}</td>
+      <td class="editable">{{ book.series|default:"" }}</td>
+      <td class="editable">{{ book.edition }}</td>
+      <td class="editable">{{ book.year|default:"" }}</td>
     </tr>
     {% if book.tags.all %}
     <tr>
