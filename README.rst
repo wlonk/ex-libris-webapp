@@ -15,31 +15,39 @@ Moved to settings_.
 Basic Commands
 --------------
 
-Setting Up Your Users
-^^^^^^^^^^^^^^^^^^^^^
+Set up initial database contents
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
+You have to create the database::
 
-To create an **superuser account**, use this command::
+    $ createdb ex_libris
 
-    $ python manage.py createsuperuser
+And then set up the tables::
 
-For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
+    $ python manage.py migrate
+
+And then populate the database with the Dropbox OAuth configuration::
+
+    $ python manage.py create_social_auth_provider
 
 Test coverage
 ^^^^^^^^^^^^^
 
-To run the tests, check your test coverage, and generate an HTML coverage report::
+To run the tests, check your test coverage, and generate an HTML coverage
+report::
 
-    $ py.test --cov=. --cov-report=html ex_libris
+    $ fab test
     $ open htmlcov/index.html
 
 Live reloading and Sass CSS compilation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Moved to `Live reloading and SASS compilation`_.
+We have Sass we need to compile on changes, so we wrap ``manage.py runserver``
+in some ``grunt`` magic::
 
-.. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.org/en/latest/live-reloading-and-sass-compilation.html
+    $ npm install
+    $ npm install -g grunt-cli
+    $ grunt serve
 
 Celery
 ^^^^^^
@@ -50,11 +58,15 @@ To run a celery worker:
 
 .. code-block:: bash
 
-    celery -A ex_libris.taskapp worker -l info
+    celery worker -B --app=ex_libris.taskapp --loglevel info --autoreload
 
-Please note: For Celery's import magic to work, it is important *where* the celery commands are run. If you are in the same folder with *manage.py*, you should be right.
+But ``grunt serve`` will do this for you anyway.
 
-It's time to write the code!!!
+Please note: For Celery's import magic to work, it is important *where* the
+celery commands are run. If you are in the same folder with *manage.py*, you
+should be right.
+
+It's time to write the code!
 
 Running end to end integration tests
 ------------------------------------
@@ -65,7 +77,8 @@ To install the test runner::
 
   $ pip install hitch
 
-To run the tests, enter the ex_libris/tests directory and run the following commands::
+To run the tests, enter the ex_libris/tests directory and run the following
+commands::
 
   $ hitch init
 
@@ -73,11 +86,13 @@ Then run the stub test::
 
   $ hitch test stub.test
 
-This will download and compile python, postgres and redis and install all python requirements so the first time it runs it may take a while.
+This will download and compile python, postgres and redis and install all
+python requirements so the first time it runs it may take a while.
 
 Subsequent test runs will be much quicker.
 
-The testing framework runs Django, Celery (if enabled), Postgres, HitchSMTP (a mock SMTP server), Firefox/Selenium and Redis.
+The testing framework runs Django, Celery (if enabled), Postgres, HitchSMTP (a
+mock SMTP server), Firefox/Selenium and Redis.
 
 Deployment
 ----------

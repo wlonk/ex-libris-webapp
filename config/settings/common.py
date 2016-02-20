@@ -244,6 +244,9 @@ AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 # CELERY
 INSTALLED_APPS += ('ex_libris.taskapp.celery.CeleryConfig',)
 BROKER_URL = env("CELERY_BROKER_URL", default='django://')
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_SERIALIZER = 'json'
 # END CELERY
 
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}

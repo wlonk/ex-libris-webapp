@@ -8,4 +8,4 @@ dependencies:
     - pip install -r requirements/local.txt
 test:
   override:
-    - ./test.sh
+    - py.test --cov=ex_libris --cov-report=term ex_libris
