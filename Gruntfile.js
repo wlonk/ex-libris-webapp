@@ -112,13 +112,15 @@ module.exports = function (grunt) {
       runDjango: {
         cmd: 'python <%= paths.manageScript %> runserver'
       },
-      
+      runCelery: {
+        cmd: 'celery worker -B --app=ex_libris.taskapp --loglevel=info --autoreload'
+      }
     }
   });
 
   grunt.registerTask('serve', [
-    
     'bgShell:runDjango',
+    'bgShell:runCelery',
     'watch'
   ]);
 
@@ -130,5 +132,4 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'build'
   ]);
-
 };
