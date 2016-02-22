@@ -52,8 +52,6 @@ class Book(models.Model):
     class Meta:
         ordering = (
             'series__name',
-            'publisher__name',
-            'author__name',
             'title',
             'year',
         )
