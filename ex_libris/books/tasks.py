@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
+from django.db.utils import IntegrityError
 
 import dropbox
+from dropbox.exceptions import ApiError
 from celery import shared_task
 
 import logging
@@ -8,7 +10,7 @@ import logging
 from .models import Book
 from .utils import (
     find_all_files_of_type,
-    get_access_token_for_user,
+    build_args_for_sync_dropbox,
 )
 User = get_user_model()
 
@@ -17,27 +19,34 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-def sync_dropbox(user_id):
-    try:
-        user = User.objects.get(pk=user_id)
-    except User.DoesNotExist:
-        logger.warn("No such user: {}".format(user_id))
-        return
-    access_token = get_access_token_for_user(user)
+def sync_dropbox(access_token, import_root, user_id):
     dbx = dropbox.Dropbox(access_token)
-    profile = user.bookprofile.import_root or '/ex-libris'
-    entries = find_all_files_of_type(dbx, 'pdf', profile)
+    try:
+        entries = find_all_files_of_type(dbx, 'pdf', import_root)
+    except ApiError:
+        # TODO log error: no such import root
+        return
     for entry in entries:
-        Book.objects.get_or_create(
-            dropbox_id=entry.id,
-            owner=user,
-            defaults=dict(
-                title=entry.name,
-            ),
-        )
+        try:
+            Book.objects.get_or_create(
+                dropbox_id=entry.id,
+                owner_id=user_id,
+                defaults=dict(
+                    title=entry.name,
+                ),
+            )
+        except IntegrityError:
+            # TODO log error
+            pass
+    Book.objects.filter(
+        owner_id=user_id,
+    ).exclude(
+        dropbox_id__in=[entry.id for entry in entries],
+    ).delete()
 
 
 @shared_task
 def update_all_users():
     for user in User.objects.all():
-        sync_dropbox(user)
+        args = build_args_for_sync_dropbox(user)
+        sync_dropbox(*args)

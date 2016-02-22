@@ -1,4 +1,5 @@
 from django import forms
+from taggit.forms import TagField
 
 from .models import (
     Author,
@@ -37,6 +38,7 @@ class BookForm(forms.ModelForm):
     author_name = forms.CharField(required=False)
     publisher_name = forms.CharField(required=False)
     series_name = forms.CharField(required=False)
+    tags = TagField(required=False)
 
     class Meta:
         model = Book

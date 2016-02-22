@@ -18,11 +18,6 @@
         What folder do you want us to import your PDFs from?
       </p>
       <p>
-        (We don't yet auto-sync, so every time you add a book, you'll have to
-        click "import" again. You'll end up getting really familiar with this
-        button.)
-      </p>
-      <p>
         <form action="{% url "books:trigger_dropbox_sync" %}" method="post">
           {% csrf_token %}
           {{ book_profile_form|crispy }}

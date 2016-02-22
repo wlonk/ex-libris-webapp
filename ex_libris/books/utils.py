@@ -14,14 +14,13 @@ def is_folder(entry):
 
 def find_all_files_of_type(dbx, extension, root=''):
     results = []
-    entries = dbx.files_list_folder(root).entries
+    entries = dbx.files_list_folder(
+        root,
+        recursive=True,
+    ).entries
     for entry in entries:
         if extension_matches(extension, entry.name):
             results.append(entry)
-        elif is_folder(entry):
-            results.extend(
-                find_all_files_of_type(dbx, extension, entry.path_lower)
-            )
     return results
 
 
@@ -42,3 +41,13 @@ def get_dropbox_sharing_link(user, dropbox_id):
     dbx = dropbox.Dropbox(access_token)
     path = dbx.files_get_metadata(dropbox_id).path_lower
     return dbx.sharing_create_shared_link(path).url
+
+
+def build_args_for_sync_dropbox(user):
+    access_token = get_access_token_for_user(user)
+    import_root = user.bookprofile.import_root or '/ex-libris'
+    return (
+        access_token,
+        import_root,
+        user.pk,
+    )
