@@ -1,12 +1,44 @@
+body {
+  color: #3d3a35;
+  background-color: #f4f2ef;
+  font: 300 16pt/1.375 "Roboto"; }
+
+.bg-inverse {
+  color: #f4f2ef;
+  background-color: #3d3a35; }
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #e2dbd6; }
+
+.navbar-dark .navbar-brand {
+  color: #f4f2ef; }
+
+.btn {
+  font-weight: 300; }
+
+.alert {
+  margin-top: 16px; }
+
+.alert-info,
+.alert-success,
 .alert-debug {
-  background-color: #fff;
-  border-color: #d6e9c6;
-  color: #000; }
+  background-color: #e2dbd6;
+  border-color: #918c87;
+  color: #3d3a35; }
 
 .alert-error {
-  background-color: #f2dede;
-  border-color: #eed3d7;
-  color: #b94a48; }
+  background-color: #e2dbd6;
+  border-color: #c93838;
+  color: #918c87; }
+
+.btn-danger {
+  background-color: #e2dbd6;
+  border-color: #c93838;
+  color: #918c87; }
+  .btn-danger:hover {
+    background-color: #c93838;
+    border-color: #c93838;
+    color: #f4f2ef; }
 
 @media (max-width: 47.9em) {
   .navbar-nav .nav-item {
@@ -37,7 +69,7 @@ table.books {
     text-align: right; }
 
 .navbar-brand .release {
-  color: #f00;
+  color: #c93838;
   display: inline-block;
   position: relative;
   top: -0.5rem;
@@ -49,6 +81,10 @@ table.books {
   -o-transform: rotate(15deg);
   transform: rotate(15deg); }
 
+.navbar-brand > img {
+  display: inline;
+  height: 2.1rem; }
+
 .small-caps {
   font-variant: small-caps; }
 
@@ -56,4 +92,46 @@ table.books {
   display: none; }
 
 tbody.odd {
-  background-color: #f9f9f9; }
+  background-color: #e2dbd6; }
+
+.jumbotron {
+  background-color: #e2dbd6;
+  padding-top: 2rem; }
+  .jumbotron img {
+    width: 20rem; }
+
+.btn-primary {
+  color: #f4f2ef;
+  background-color: #3d3a35;
+  border-color: #3d3a35; }
+
+.navbar .btn-primary {
+  background-color: #0275d8;
+  border-color: #0275d8; }
+
+a {
+  color: #918c87; }
+  a:hover, a:active {
+    color: #3d3a35;
+    text-decoration: none; }
+
+.navbar a {
+  font-variant: normal; }
+
+h1 {
+  font: bold 30pt/1.2 "Lora", sans-serif;
+  color: #3d3a35; }
+
+h2 {
+  font: 16pt/1.375 "Roboto";
+  color: #3d3a35; }
+
+h3 {
+  font: 16pt/1.375 "Roboto";
+  color: #c93838; }
+
+.label-primary, .label-primary:visited, .label-primary:hover, .label-primary:active {
+  font-variant: normal;
+  background-color: #3d3a35;
+  color: #f4f2ef;
+  font-weight: 300; }

@@ -56,7 +56,7 @@
     <tr>
       <td colspan="6" class="tags">
           {% for tag in book.tags.all %}
-            <a href="{% url "books:tags" tag=tag %}" class="label label-pill label-primary">{{ tag }}</a>
+            <a href="{% url "books:tags" tag=tag %}" class="label label-pill label-primary">#{{ tag }}</a>
           {% endfor %}
       </td>
     </tr>

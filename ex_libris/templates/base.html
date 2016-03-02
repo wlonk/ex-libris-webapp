@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
 
     <!-- Your stuff: Third-party css libraries go here -->
+    <link href='//fonts.googleapis.com/css?family=Lora:bold|Roboto:300,300italic,400,400italic,700,700italic' rel='stylesheet' type='text/css'>
 
     <!-- This file store project specific CSS -->
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
@@ -34,7 +35,10 @@
     <div class="m-b">
       <nav class="navbar navbar-dark navbar-static-top navbar-full bg-inverse">
         <div class="container">
-          <a class="navbar-brand" href="{% url "home" %}">Ex Libris<span class="release">αlpha</span></a>
+          <a class="navbar-brand" href="{% url "home" %}">
+            <img src="{% static "images/logo-header.png" %}" alt="Ex Libris">
+            <span class="release">αlpha</span>
+          </a>
           <button type="button" class="navbar-toggler hidden-sm-up pull-xs-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
             &#9776;
           </button>
@@ -86,9 +90,7 @@
 
       {% block content %}
       <div class="jumbotron text-xs-center">
-        <h1 class="display-3">
-          Ex Libris
-        </h1>
+        <img src="{% static "images/logo-main.png" %}" class="img-rounded center-block" alt="Ex Libris logo">
         <p class="lead">
           Manage your library, right from your Dropbox.
         </p>
