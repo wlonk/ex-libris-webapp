@@ -80,6 +80,13 @@ def list(request):
     )
 
 
+def initial_helper(book, attr):
+    related_model = getattr(book, attr, None)
+    if related_model is not None:
+        return '{}_name'.format(attr), related_model.name
+    return None, None
+
+
 @login_required
 def detail(request, id):
     book = get_object_or_404(Book, id=id)
@@ -99,15 +106,12 @@ def detail(request, id):
         # the crispy forms library's templatetags?), overriding __init__ caused
         # an exception to be raised. Until I figure out why, this is the
         # solution.
-        initial = {
-            'author_name': book.author.name,
-            'publisher_name': book.publisher.name,
-            'series_name': book.series.name,
-        }
-        for k, v in initial.items():
-            field = form.fields.get(k)
-            if field:
-                field.initial = v
+        for attr in ('author', 'publisher', 'series'):
+            key, value = initial_helper(book, attr)
+            if key is not None:
+                field = form.fields.get(key)
+                if field is not None:
+                    field.initial = value
     return render(
         request,
         "books/detail.html",
