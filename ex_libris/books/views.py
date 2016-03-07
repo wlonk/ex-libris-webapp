@@ -94,6 +94,20 @@ def detail(request, id):
             )
     else:
         form = BookForm(instance=book)
+        # TODO: including this here, rather than in the BookForm, is tech debt.
+        # However, due to some shenanigans (possibly involving metaclasses and
+        # the crispy forms library's templatetags?), overriding __init__ caused
+        # an exception to be raised. Until I figure out why, this is the
+        # solution.
+        initial = {
+            'author_name': book.author.name,
+            'publisher_name': book.publisher.name,
+            'series_name': book.series.name,
+        }
+        for k, v in initial.items():
+            field = form.fields.get(k)
+            if field:
+                field.initial = v
     return render(
         request,
         "books/detail.html",
