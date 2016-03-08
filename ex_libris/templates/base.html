@@ -69,8 +69,8 @@
               {% else %}
                 <li class="nav-item">
                   <a id="log-in-link" class="nav-link" href="{% provider_login_url "custom_dropbox_oauth2" process="login" %}">
+                    {% trans "Log in via" %}
                     <img class="inline-image" alt="Dropbox" src="{% static "images/dropbox_glyph_blue.png" %}">
-                    {% trans "Log In" %}
                   </a>
                 </li>
               {% endif %}
