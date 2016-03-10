@@ -43,6 +43,11 @@ def sync_dropbox(access_token, import_root, user_id):
     ).exclude(
         dropbox_id__in=[entry.id for entry in entries],
     ).delete()
+    Book.objects.filter(
+        owner_id=user_id,
+    ).update(
+        dropbox_sharing_link='',
+    )
 
 
 @shared_task
