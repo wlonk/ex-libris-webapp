@@ -135,3 +135,15 @@ h3 {
   background-color: #3d3a35;
   color: #f4f2ef;
   font-weight: 300; }
+
+.editable {
+  cursor: pointer; }
+
+.editable-click {
+  border-bottom: none !important; }
+
+.editable-empty {
+  color: #918c87 !important; }
+
+.form-inline .form-control {
+  width: 100%; }

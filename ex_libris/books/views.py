@@ -91,14 +91,22 @@ def initial_helper(book, attr):
 def detail(request, id):
     book = get_object_or_404(Book, id=id)
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
+        # Horrible hack to deal with frontend framework mishegas:
+        if request.is_ajax():
+            form_dict = {
+                request.POST.get('name', ''): request.POST.get('value', ''),
+            }
+        else:
+            form_dict = request.POST
+        form = BookForm(form_dict, instance=book)
         if form.is_valid():
             form.save()
-            messages.add_message(
-                request,
-                messages.INFO,
-                "Success!",
-            )
+            if not request.is_ajax():
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    "Success!",
+                )
     else:
         form = BookForm(instance=book)
         # TODO: including this here, rather than in the BookForm, is tech debt.
@@ -112,14 +120,21 @@ def detail(request, id):
                 field = form.fields.get(key)
                 if field is not None:
                     field.initial = value
-    return render(
-        request,
-        "books/detail.html",
-        {
-            "book": book,
-            "form": form,
-        }
-    )
+    if request.is_ajax():
+        return HttpResponse(
+            json.dumps(
+                form.cleaned_data,
+            ),
+        )
+    else:
+        return render(
+            request,
+            "books/detail.html",
+            {
+                "book": book,
+                "form": form,
+            }
+        )
 
 
 # TODO:

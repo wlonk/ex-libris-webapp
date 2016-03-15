@@ -8,10 +8,6 @@ def extension_matches(extension, name):
     return ".{}".format(extension) == ext
 
 
-def is_folder(entry):
-    return isinstance(entry, dropbox.files.FolderMetadata)
-
-
 def find_all_files_of_type(dbx, extension, root=''):
     results = []
     entries = dbx.files_list_folder(
