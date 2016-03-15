@@ -19,14 +19,14 @@
 
     <!-- Your stuff: Third-party css libraries go here -->
     <link href='//fonts.googleapis.com/css?family=Lora:bold|Roboto:300,300italic,400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static "octicons/octicons.css" %}">
 
     <!-- This file store project specific CSS -->
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
     {% endblock %}
 
-    {% block angular %}
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    {% endblock %}
+    {% block css_extra %}
+    {% endblock css_extra %}
 
   </head>
 

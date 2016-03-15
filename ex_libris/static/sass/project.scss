@@ -218,3 +218,19 @@ h3 {
     font-weight: 300;
   }
 }
+
+.editable {
+  cursor: pointer;
+}
+
+.editable-click {
+  border-bottom: none !important;
+}
+
+.editable-empty {
+  color: $pink !important;
+}
+
+.form-inline .form-control {
+  width: 100%;
+}
