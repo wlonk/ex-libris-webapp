@@ -3,12 +3,9 @@ import json
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
-    HttpResponseNotAllowed,
-    HttpResponseRedirect,
 )
 from django.shortcuts import (
     get_object_or_404,
@@ -25,10 +22,7 @@ from pure_pagination import (
 
 from . import tasks
 from .filters import BookFilter
-from .forms import (
-    BookForm,
-    BookProfileForm,
-)
+from .forms import BookForm
 from .models import Book
 from .utils import build_args_for_sync_dropbox
 User = get_user_model()
@@ -135,36 +129,6 @@ def detail(request, id):
                 "form": form,
             }
         )
-
-
-# TODO:
-# This is begging to be done with CBVs, rather than being quite so hand-rolled.
-@login_required
-def trigger_dropbox_sync(request):
-    if request.method == 'POST':
-        form = BookProfileForm(request.POST, instance=request.user.bookprofile)
-        if form.is_valid():
-            form.save()
-            args = build_args_for_sync_dropbox(request.user)
-            tasks.sync_dropbox.delay(*args)
-            messages.add_message(
-                request,
-                messages.INFO,
-                "We've kicked off your import! It'll take a while, be patient.",
-            )
-            response = HttpResponseRedirect(
-                request.build_absolute_uri(
-                    reverse('books:list')
-                )
-            )
-        else:
-            response = HttpResponseBadRequest(
-                json.dumps(form.errors),
-                content_type='application/json',
-            )
-    else:
-        response = HttpResponseNotAllowed(['POST'])
-    return response
 
 
 class DropboxWebhookView(View):

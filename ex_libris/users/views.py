@@ -16,13 +16,9 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     slug_url_kwarg = "username"
 
     def get_context_data(self, **kwargs):
-        from ex_libris.books.forms import BookProfileForm
         context = super().get_context_data(**kwargs)
         user = context['user']
         context['is_self'] = self.request.user == user
-        context['book_profile_form'] = BookProfileForm(
-            instance=user.bookprofile,
-        )
         return context
 
 
