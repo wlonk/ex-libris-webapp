@@ -19,10 +19,10 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task
-def sync_dropbox(access_token, import_root, user_id):
+def sync_dropbox(access_token, user_id):
     dbx = dropbox.Dropbox(access_token)
     try:
-        entries = find_all_files_of_type(dbx, 'pdf', import_root)
+        entries = find_all_files_of_type(dbx, 'pdf')
     except ApiError:
         # TODO log error: no such import root
         return

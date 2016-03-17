@@ -6,23 +6,13 @@
 
 {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <h1>{{ object.username }}</h1>
-    </div>
-  </div>
   {% if is_self %}
   <div class="row">
-    <div class="col-sm-12">
-      <p>
-        What folder do you want us to import your PDFs from?
-      </p>
-      <p>
-        <form action="{% url "books:trigger_dropbox_sync" %}" method="post">
-          {% csrf_token %}
-          {{ book_profile_form|crispy }}
-          <input class="btn btn-primary" type="submit" value="import">
-        </form>
+    <div class="jumbotron text-xs-center">
+      <h1>Welcome, {{ object.username }}!</h1>
+      <p class="lead">
+      Congratulations! You're all signed up. Any PDFs you put in
+      <code>Dropbox/Apps/Ex Libris/</code> will show up here on Ex Libris.
       </p>
     </div>
   </div>
