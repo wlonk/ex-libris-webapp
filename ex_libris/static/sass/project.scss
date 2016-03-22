@@ -104,7 +104,11 @@ table.books {
   }
 
   th:first-child, td:first-child {
-    width: 25%;
+    width: 2em;
+  }
+
+  th:first-child + th, td:first-child + td {
+    width: 22%;
   }
 
   td {
@@ -233,4 +237,5 @@ h3 {
 
 .form-inline .form-control {
   width: 100%;
+  line-height: 1.3;
 }

@@ -30,11 +30,26 @@ $.ajaxSetup({
 
 $(document).ready(function() {
     $(".editable").editable({
+        clear: false,
+        emptytext: 'edit',
         mode: 'inline',
         onblur: 'submit',
         send: 'always',
-        clear: false,
-        emptytext: 'edit',
         showbuttons: false
     });
+    $(".has-editable").focus(function(e) {
+        e.stopPropagation();
+        $(e.target)
+            .children('.editable')
+            .editable('show');
+    });
+    $('tr').on('blur', '.form-control', function(e) {
+        e.stopPropagation();
+        $(e.target)
+            .parents('span.editable-container')
+            .siblings('.editable')
+            .editable('hide');
+    });
+    // Shift-tab (reverse tabbing) will land on the enclosing .has-editable,
+    // and force focus back to where it was again.
 });
