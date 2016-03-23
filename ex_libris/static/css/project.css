@@ -62,7 +62,9 @@ table.books {
     width: 15%;
     overflow: auto; }
   table.books th:first-child, table.books td:first-child {
-    width: 25%; }
+    width: 2em; }
+  table.books th:first-child + th, table.books td:first-child + td {
+    width: 22%; }
   table.books td {
     border-top: none; }
   table.books td.tags {
@@ -146,4 +148,5 @@ h3 {
   color: #918c87 !important; }
 
 .form-inline .form-control {
-  width: 100%; }
+  width: 100%;
+  line-height: 1.3; }

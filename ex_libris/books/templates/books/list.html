@@ -44,6 +44,7 @@
 
 <table class="table books">
   <thead>
+    <th></th>
     <th>Title</th>
     <th>Author</th>
     <th>Publisher</th>
@@ -59,31 +60,33 @@
         <a href="{% url "books:detail" id=book.id %}">
           <span class="mega-octicon octicon-repo"></span>
         </a>
+      </td>
+      <td tabindex="0" class="has-editable">
         <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="title" class="editable">
           {{ book }}
         </span>
       </td>
-      <td>
+      <td tabindex="0" class="has-editable">
         <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="author_name" class="editable">
           {{ book.author|default:"" }}
         </span>
       </td>
-      <td>
+      <td tabindex="0" class="has-editable">
         <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="publisher_name" class="editable">
           {{ book.publisher|default:"" }}
         </span>
       </td>
-      <td>
+      <td tabindex="0" class="has-editable">
         <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="series_name" class="editable">
           {{ book.series|default:"" }}
         </span>
       </td>
-      <td>
+      <td tabindex="0" class="has-editable">
         <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="edition" class="editable">
           {{ book.edition }}
         </span>
       </td>
-      <td>
+      <td tabindex="0" class="has-editable">
         <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="year" class="editable">
           {{ book.year|default:"" }}
         </span>
