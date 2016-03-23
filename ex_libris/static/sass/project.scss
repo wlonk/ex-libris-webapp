@@ -9,10 +9,17 @@ $mint-green: #e2dbd6;  // Silver Rust
 $pink: #918c87;        // Natural Gray
 $black: #3d3a35;       // Armadillo
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   color: $black;
   background-color: $white;
   font: 300 16pt/1.375 "Roboto";
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
 }
 
 .bg-inverse {
@@ -238,4 +245,17 @@ h3 {
 .form-inline .form-control {
   width: 100%;
   line-height: 1.3;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+
+  * {
+    margin-bottom: 0;
+  }
 }
