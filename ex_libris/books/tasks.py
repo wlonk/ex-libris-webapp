@@ -35,9 +35,10 @@ def sync_dropbox(access_token, user_id):
                     title=entry.name,
                 ),
             )
-        except IntegrityError:
-            # TODO log error
-            pass
+        except IntegrityError as e:
+            logger.error(e)
+        except Book.MultipleObjectsReturned as e:
+            logger.error(e)
     Book.objects.filter(
         owner_id=user_id,
     ).exclude(
