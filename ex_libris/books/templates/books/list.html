@@ -17,6 +17,11 @@
     Filter
   </button>
 </li>
+<li class="nav-item">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-modal">
+    Edit
+  </button>
+</li>
 {% endblock navbar_extra %}
 
 {% block content %}
@@ -42,6 +47,28 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div id="edit-modal" class="modal fade">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method="post" action="." id="edit_form">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Filter</h4>
+        </div>
+        <div class="modal-body">
+          {{ edit_form|crispy }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" value="Edit" class="btn btn-primary">
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <table class="table books">
   <thead>
     <th></th>
@@ -53,12 +80,13 @@
     <th>Year</th>
   </thead>
 {% for book in books.object_list %}
-  <tbody class="{% cycle "odd" "even" %}">
+  <tbody class="{% cycle "odd" "even" %}" data-book_id="{{ book.id }}">
     <tr>
       {# TODO use generic app namespace name in url tag? #}
       <td>
+        <input type="checkbox" class="book-row-checkbox">
         <a href="{% url "books:detail" id=book.id %}">
-          <span class="mega-octicon octicon-repo"></span>
+          <span class="octicon octicon-repo"></span>
         </a>
       </td>
       <td tabindex="0" class="has-editable">
@@ -94,7 +122,7 @@
     </tr>
     {% if book.tags.all %}
     <tr>
-      <td colspan="6" class="tags">
+      <td colspan="7" class="tags">
         {% for tag in book.tags.all %}
         <a href="{% url "books:tags" tag=tag %}" class="label label-pill label-primary">#{{ tag }}</a>
         {% endfor %}
@@ -105,7 +133,7 @@
 {% empty %}
   <tbody>
     <tr>
-      <td colspan="6">No books</td>
+      <td colspan="7">No books</td>
     </tr>
   </tbody>
 {% endfor %}
