@@ -64,12 +64,14 @@ def list(request):
     )
     p = Paginator(objects, 10, request=request)
     books = p.page(page)
+    edit_form = BookForm()
     return render(
         request,
         "books/list.html",
         {
             "books": books,
             "filter": objects,
+            "edit_form": edit_form,
         }
     )
 
@@ -86,7 +88,8 @@ def detail(request, id):
     book = get_object_or_404(Book, id=id)
     if request.method == 'POST':
         # Horrible hack to deal with frontend framework mishegas:
-        if request.is_ajax():
+        is_in_place_field_edit = request.is_ajax() and 'value' in request.POST
+        if is_in_place_field_edit:
             form_dict = {
                 request.POST.get('name', ''): request.POST.get('value', ''),
             }

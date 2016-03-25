@@ -102,6 +102,9 @@ table.books {
 tbody.odd {
   background-color: #e2dbd6; }
 
+tbody.selected {
+  background-color: rgba(201, 56, 56, 0.2); }
+
 .jumbotron {
   background-color: #e2dbd6;
   padding-top: 2rem; }
