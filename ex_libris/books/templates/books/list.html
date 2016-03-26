@@ -2,15 +2,6 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 
-{% block css_extra %}
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
-{% endblock css_extra %}
-
-{% block javascript_extra %}
-<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-<script src="{% static 'js/list.js' %}" type="text/javascript"></script>
-{% endblock javascript_extra %}
-
 {% block navbar_extra %}
 <li class="nav-item">
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filter-modal">
@@ -90,32 +81,32 @@
         </a>
       </td>
       <td tabindex="0" class="has-editable">
-        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="title" class="editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="title" class="editable plain">
           {{ book }}
         </span>
       </td>
       <td tabindex="0" class="has-editable">
-        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="author_name" class="editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="typeaheadjs" data-name="author_name" class="editable typeahead author">
           {{ book.author|default:"" }}
         </span>
       </td>
       <td tabindex="0" class="has-editable">
-        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="publisher_name" class="editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="typeaheadjs" data-name="publisher_name" class="editable typeahead publisher">
           {{ book.publisher|default:"" }}
         </span>
       </td>
       <td tabindex="0" class="has-editable">
-        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="series_name" class="editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="typeaheadjs" data-name="series_name" class="editable typeahead series">
           {{ book.series|default:"" }}
         </span>
       </td>
       <td tabindex="0" class="has-editable">
-        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="edition" class="editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="edition" class="editable plain">
           {{ book.edition }}
         </span>
       </td>
       <td tabindex="0" class="has-editable">
-        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="year" class="editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="year" class="editable plain">
           {{ book.year|default:"" }}
         </span>
       </td>
