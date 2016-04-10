@@ -68,7 +68,7 @@ class Book(models.Model):
         blank=True,
     )
 
-    dropbox_id = models.CharField(max_length=256, default='')
+    dropbox_id = models.CharField(max_length=256, unique=True)
     dropbox_sharing_link = models.URLField(default='')
 
     tags = TaggableManager()
