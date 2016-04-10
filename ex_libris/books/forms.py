@@ -101,7 +101,7 @@ class BookForm(PatchModelForm):
         )
         for model, field in model_field_pairs:
             name = self.cleaned_data.get(field + '_name')
-            if name is not None:
+            if name is not None and name:
                 instance, _ = model.objects.get_or_create(
                     name=self.cleaned_data[field + "_name"],
                 )
