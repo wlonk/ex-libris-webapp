@@ -20,10 +20,23 @@ from pure_pagination import (
     PageNotAnInteger,
 )
 
+from rest_framework import viewsets
+
 from . import tasks
 from .filters import BookFilter
 from .forms import BookForm
-from .models import Book
+from .models import (
+    Book,
+    Author,
+    Publisher,
+    Series,
+)
+from .serializers import (
+    AuthorSerializer,
+    PublisherSerializer,
+    SeriesSerializer,
+)
+from .permissions import ReadOnly
 from .utils import build_args_for_sync_dropbox
 User = get_user_model()
 
@@ -165,3 +178,29 @@ class DropboxWebhookView(View):
             args = build_args_for_sync_dropbox(user)
             tasks.sync_dropbox.delay(*args)
         return HttpResponse('')
+
+
+class TypeaheadDataViewSet(viewsets.ModelViewSet):
+    permission_classes = (
+        ReadOnly,
+    )
+
+    def get_queryset(self):
+        return self.model.objects.filter(
+            book__owner=self.request.user,
+        )
+
+
+class AuthorViewSet(TypeaheadDataViewSet):
+    model = Author
+    serializer_class = AuthorSerializer
+
+
+class PublisherViewSet(TypeaheadDataViewSet):
+    model = Publisher
+    serializer_class = PublisherSerializer
+
+
+class SeriesViewSet(TypeaheadDataViewSet):
+    model = Series
+    serializer_class = SeriesSerializer
