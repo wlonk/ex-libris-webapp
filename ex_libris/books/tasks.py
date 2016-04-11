@@ -52,7 +52,7 @@ def sync_dropbox(access_token, user_id):
 
 
 @shared_task
-def update_all_users():
-    for user in User.objects.all():
+def sync_for_all_users():
+    for user in User.objects.filter(is_active=True):
         args = build_args_for_sync_dropbox(user)
         sync_dropbox(*args)
