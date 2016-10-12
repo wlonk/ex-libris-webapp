@@ -11,7 +11,7 @@ Book
 
       GET /book/ HTTP/1.1
       Host: api.exlibris.ink
-      Accept: application/json, application/json
+      Accept: application/json
       Authorization: Token 01234567-89ab-cdef-0123-456789abcdef
 
    **Example response**:
@@ -39,7 +39,7 @@ Book
             "name": "The Complete Jane Austen"
           },
           "edition": "1st",
-          "year": 1815
+          "year": "1815"
         }
       ]
 
@@ -50,15 +50,15 @@ Book
 
 .. http:post:: /book/
 
-   Create a new book owned by the current user
+   Create a new book owned by the current user.
 
    **Example request**:
 
    .. sourcecode:: http
 
-      GET /book/ HTTP/1.1
+      POST /book/ HTTP/1.1
       Host: api.exlibris.ink
-      Accept: application/json, application/json
+      Accept: application/json
       Authorization: Token 01234567-89ab-cdef-0123-456789abcdef
 
       {
@@ -73,7 +73,7 @@ Book
           "name": "Works on Whaling"
         },
         "edition": "1st",
-        "year": 1851
+        "year": "1851"
       }
 
    **Example response**:
@@ -100,7 +100,7 @@ Book
           "name": "Works on Whaling"
         },
         "edition": "1st",
-        "year": 1851
+        "year": "1851"
       }
 
    :reqheader Accept: the response content type depends on
@@ -118,7 +118,7 @@ Book
 
       GET /book/1/ HTTP/1.1
       Host: api.exlibris.ink
-      Accept: application/json, application/json
+      Accept: application/json
       Authorization: Token 01234567-89ab-cdef-0123-456789abcdef
 
    **Example response**:
@@ -145,7 +145,7 @@ Book
           "name": "The Complete Jane Austen"
         },
         "edition": "1st",
-        "year": 1815
+        "year": "1815"
       }
 
    :reqheader Accept: the response content type depends on
@@ -163,7 +163,7 @@ Book
 
       PUT /book/1/ HTTP/1.1
       Host: api.exlibris.ink
-      Accept: application/json, application/json
+      Accept: application/json
       Authorization: Token 01234567-89ab-cdef-0123-456789abcdef
 
       {
@@ -178,7 +178,7 @@ Book
           "name": "The Incomplete Jane Austen"
         },
         "edition": "1st",
-        "year": 1815
+        "year": "1815"
       }
 
    **Example response**:
@@ -205,7 +205,7 @@ Book
           "name": "The Incomplete Jane Austen"
         },
         "edition": "1st",
-        "year": 1815
+        "year": "1815"
       }
 
    :reqheader Accept: the response content type depends on
@@ -221,9 +221,9 @@ Book
 
    .. sourcecode:: http
 
-      PUT /book/1/ HTTP/1.1
+      PATCH /book/1/ HTTP/1.1
       Host: api.exlibris.ink
-      Accept: application/json, application/json
+      Accept: application/json
       Authorization: Token 01234567-89ab-cdef-0123-456789abcdef
 
       {
@@ -257,7 +257,7 @@ Book
           "name": "Yet more Jane Austen"
         },
         "edition": "1st",
-        "year": 1815
+        "year": "1815"
       }
 
    :reqheader Accept: the response content type depends on
@@ -275,7 +275,7 @@ Book
 
       DELETE /book/1/ HTTP/1.1
       Host: api.exlibris.ink
-      Accept: application/json, application/json
+      Accept: application/json
       Authorization: Token 01234567-89ab-cdef-0123-456789abcdef
 
    **Example response**:
