@@ -114,6 +114,12 @@ module.exports = function (grunt) {
       },
       runCelery: {
         cmd: 'celery worker -B --app=ex_libris.taskapp --loglevel=info --autoreload'
+      },
+      runEmber: {
+        cmd: 'ember build',
+        execOpts: {
+            cwd: 'web_client'
+        }
       }
     }
   });
@@ -121,6 +127,7 @@ module.exports = function (grunt) {
   grunt.registerTask('serve', [
     'bgShell:runDjango',
     'bgShell:runCelery',
+    'bgShell:runEmber',
     'watch'
   ]);
 

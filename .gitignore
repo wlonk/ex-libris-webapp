@@ -67,3 +67,6 @@ mailhog
 
 # Celerybeat drek
 celerybeat-schedule
+
+# Docs
+docs/_build

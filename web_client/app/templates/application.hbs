@@ -1,0 +1,54 @@
+<div class="m-b">
+  <nav class="navbar navbar-dark navbar-static-top navbar-full bg-inverse">
+    <div class="container">
+      {{#link-to 'index' class="navbar-brand"}}
+      <img src="/static/images/logo-header.png" alt="Ex Libris">
+      <span class="release">βeta</span>
+      {{/link-to}}
+      <button type="button" class="navbar-toggler hidden-sm-up pull-xs-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+        &#9776;
+      </button>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-toggleable-xs" id="bs-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          {{#if session.is_authenticated }}
+          <li class="nav-item">
+            {{#link-to 'index' class='nav-link' }}Books{{/link-to}}
+          </li>
+          {{/if}}
+        </ul>
+
+        <ul class="nav navbar-nav pull-xs-right">
+          {{#if session.isAuthenticated}}
+          <li class="nav-item">
+            {{#link-to 'user' session.user class='nav-link'}}@{{ session.user.username }}{{/link-to}}
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-primary-outline nav-link" {{action 'invalidateSession'}}>(logout)</button>
+          </li>
+          {{else}}
+          <li class="nav-item">
+            <button class="btn btn-primary-outline nav-link" {{action 'authenticate' 'dropbox-oauth2'}}>dropbox</button>
+          </li>
+          {{/if}}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div id="body-container" class="container">
+  {{outlet 'messages'}}
+  {{outlet}}
+</div> <!-- /container -->
+
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted small">
+    &copy; 2016 Transneptune Games
+    &bull; {{#link-to "about"}}About{{/link-to}}
+    &bull; {{#link-to "privacy"}}Privacy{{/link-to}}
+    </p>
+  </div>
+</footer>

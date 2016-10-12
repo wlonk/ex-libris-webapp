@@ -58,10 +58,7 @@
             <ul class="nav navbar-nav pull-xs-right">
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">@{{ request.user.username }}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'account_logout' %}">(logout)</a>
+                  Logged in
                 </li>
               {% else %}
                 <li class="nav-item">
@@ -107,16 +104,6 @@
       </div>
       {% endblock content %}
     </div> <!-- /container -->
-
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted small">
-        &copy; 2016 Transneptune Games
-        &bull; <a href="{% url "about" %}">About</a>
-        &bull; <a href="{% url "privacy" %}">Privacy</a>
-        </p>
-      </div>
-    </footer>
 
     {% block modal %}{% endblock modal %}
 

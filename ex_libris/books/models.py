@@ -1,5 +1,3 @@
-import datetime
-
 from django.conf import settings
 from django.db import models
 
@@ -10,12 +8,6 @@ from .utils import (
     get_dropbox_sharing_link,
     build_args_for_sync_dropbox,
 )
-
-
-YEAR_CHOICES = []
-
-for r in range(1980, (datetime.datetime.now().year+1)):
-    YEAR_CHOICES.append((r, r))
 
 
 class Author(models.Model):
@@ -62,13 +54,9 @@ class Book(models.Model):
     publisher = models.ForeignKey(Publisher, null=True)
     series = models.ForeignKey(Series, null=True)
     edition = models.CharField(max_length=128, blank=True)
-    year = models.IntegerField(
-        choices=YEAR_CHOICES,
-        null=True,
-        blank=True,
-    )
+    year = models.CharField(max_length=128, blank=True)
 
-    dropbox_id = models.CharField(max_length=256, unique=True)
+    dropbox_id = models.CharField(max_length=256, unique=True, null=True)
     dropbox_sharing_link = models.URLField(default='')
 
     tags = TaggableManager()

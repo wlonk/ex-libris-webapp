@@ -15,12 +15,12 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 
+from rest_framework import viewsets
+
 from pure_pagination import (
     Paginator,
     PageNotAnInteger,
 )
-
-from rest_framework import viewsets
 
 from . import tasks
 from .filters import BookFilter
@@ -32,13 +32,23 @@ from .models import (
     Series,
 )
 from .serializers import (
+    BookSerializer,
     AuthorSerializer,
     PublisherSerializer,
     SeriesSerializer,
+    UserSerializer,
 )
 from .permissions import ReadOnly
 from .utils import build_args_for_sync_dropbox
 User = get_user_model()
+
+
+class LimitToOwnerMixin:
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 # TODO this is code duplicationtastic. Abstract these two into a CBV, override a
@@ -163,18 +173,8 @@ class DropboxWebhookView(View):
         users = json.loads(body).get('delta', {}).get('users', [])
         for user_id in users:
             user = User.objects.filter(
-                socialaccount__extra_data__contains=user_id,
+                dropbox_uid=user_id,
             ).first()
-            # Just make sure we didn't get a false match on some other
-            # attribute:
-            right_user = user is not None and user.socialaccount_set.first(
-            ).extra_data.get(
-                'uid',
-                None,
-            ) == user_id
-            if not right_user:
-                # TODO log warning?
-                continue
             args = build_args_for_sync_dropbox(user)
             tasks.sync_dropbox.delay(*args)
         return HttpResponse('')
@@ -194,13 +194,43 @@ class TypeaheadDataViewSet(viewsets.ModelViewSet):
 class AuthorViewSet(TypeaheadDataViewSet):
     model = Author
     serializer_class = AuthorSerializer
+    queryset = model.objects.all()
+
+    def get_queryset(self):
+        return self.model.objects.filter(
+            book__owner=self.request.user,
+        )
 
 
 class PublisherViewSet(TypeaheadDataViewSet):
     model = Publisher
     serializer_class = PublisherSerializer
+    queryset = model.objects.all()
+
+    def get_queryset(self):
+        return self.model.objects.filter(
+            book__owner=self.request.user,
+        )
 
 
 class SeriesViewSet(TypeaheadDataViewSet):
     model = Series
     serializer_class = SeriesSerializer
+    queryset = model.objects.all()
+
+    def get_queryset(self):
+        return self.model.objects.filter(
+            book__owner=self.request.user,
+        )
+
+
+class BookViewSet(LimitToOwnerMixin, viewsets.ModelViewSet):
+    model = Book
+    serializer_class = BookSerializer
+    queryset = model.objects.all()
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    model = User
+    serializer_class = UserSerializer
+    queryset = User.objects.all()

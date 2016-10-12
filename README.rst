@@ -49,6 +49,28 @@ in some ``grunt`` magic::
     $ npm install -g grunt-cli
     $ grunt serve
 
+Web frontend client
+^^^^^^^^^^^^^^^^^^^
+
+This is written in Ember. It lives in ``web_client``. It builds into the Django
+static assets, but requires its own NPM and Bower package management. To get
+things set up, ``cd`` in there and run::
+
+    $ npm install
+    $ bower install
+
+(You may need to install some prerequisites if they are not on your system::
+
+    $ npm install -g ember-cli
+    $ npm install -g bower
+    $ brew install watchman
+    $ npm install -g phantomjs-prebuilt
+
+or so.)
+
+The ``grunt serve`` command above will run ``ember build``, but you can run
+that yourself manually.
+
 Celery
 ^^^^^^
 

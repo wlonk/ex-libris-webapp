@@ -1,0 +1,13 @@
+{
+	"version": 3,
+	"sourceRoot": "/Users/kit/code/ex-libris/web_client/app/styles",
+	"file": "web-client.css",
+	"sources": [
+		"../../sass_compiler-input_base_path-rTuPoG9c.tmp/0/app/styles/app.scss"
+	],
+	"sourcesContent": [
+		""
+	],
+	"mappings": "",
+	"names": []
+}
