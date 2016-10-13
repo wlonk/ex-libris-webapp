@@ -22,22 +22,25 @@ class DropboxAuthTokenSerializer(serializers.Serializer):
 
         # Talk to Dropbox:
         try:
-            dropbox_data = get_dropbox_bearer_token(code, redirect_uri)
+            data = get_dropbox_bearer_token(code, redirect_uri)
             # Rekey and drop unnecessary data:
             dropbox_data = {
-                'dropbox_access_token': dropbox_data['access_token'],
-                'dropbox_account_id': dropbox_data['account_id'],
-                'dropbox_uid': dropbox_data['uid'],
+                'dropbox_account_id': data['account_id'],
+                'dropbox_uid': data['uid'],
+            }
+            dropbox_data_defaults = {
+                'username': str(uuid4()),
+                'dropbox_access_token': data['access_token'],
             }
         except HTTPError:
             raise exceptions.ValidationError('Invalid Dropbox code')
 
         # Make appropriate user and return it:
-        user = User.objects.filter(**dropbox_data).first()
-        if user is None:
-            user = User.objects.create(
-                username=str(uuid4()),
-                **dropbox_data,
-            )
+        user, _ = User.objects.get_or_create(
+            defaults=dropbox_data_defaults,
+            **dropbox_data
+        )
+        user.dropbox_access_token = data['access_token']
+        user.save()
         attrs['user'] = user
         return attrs
