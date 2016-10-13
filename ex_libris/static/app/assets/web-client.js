@@ -1550,7 +1550,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("web-client/app")["default"].create({"name":"web-client","version":"0.1.0+aa6969aa","API_HOST":"http://localhost:8000","API_NAMESPACE":"api","API_ADD_TRAILING_SLASHES":true});
+  require("web-client/app")["default"].create({"name":"web-client","version":"0.1.0+1ed5d033","API_HOST":"http://localhost:8000","API_NAMESPACE":"api","API_ADD_TRAILING_SLASHES":true});
 }
 
 /* jshint ignore:end */
