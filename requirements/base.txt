@@ -10,6 +10,7 @@ Django==1.10.2
 # Configuration
 django-environ==0.4.0
 django-secure==1.0.1
+django-gulp==2.5.0
 whitenoise==3.2.2
 
 # Forms
