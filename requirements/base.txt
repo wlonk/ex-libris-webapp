@@ -10,7 +10,7 @@ django==1.10.6
 # Configuration
 django-environ==0.4.1
 django-secure==1.0.1
-whitenoise==3.0
+whitenoise==3.3.0
 
 # Forms
 django-braces==1.8.1
