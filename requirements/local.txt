@@ -1,19 +1,21 @@
 # Local development dependencies go here
 -r base.txt
-coverage==4.2
-Sphinx==1.4.8
-django-extensions==1.7.4
-Werkzeug==0.11.11
-django-test-plus==1.0.15
-factory_boy==2.7.0
 
-# Documentation extensions
-sphinxcontrib-httpdomain==1.5.0
+# Documentation:
+Sphinx
+sphinxcontrib-httpdomain
 
-# improved REPL and debugging
+# REPL-land:
+beeprint
 ipython
 pdbpp
-beeprint
 
-# Management tool
-fabric==1.12.0
+# Test support:
+coverage
+django-test-plus
+factory_boy
+flake8
+pytest
+pytest-django
+pytest-cov
+pytest-env

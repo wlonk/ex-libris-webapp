@@ -1,51 +1,60 @@
-# Wheel 0.25+ needed to install certain packages on CPython 3.5+
-# like Pillow and psycopg2
-# See http://bitly.com/wheel-building-fails-CPython-35
-# Verified bug on Python 3.5.1
-wheel==0.29.0
-
-# Bleeding edge Django
-Django==1.10.2
+# Latest Django
+Django==1.10.6
 
 # Configuration
-django-environ==0.4.0
+django-environ==0.4.1
 django-secure==1.0.1
 django-gulp==2.5.0
-whitenoise==3.2.2
+whitenoise==3.3.0
 
 # Forms
-django-braces==1.9.0
-django-crispy-forms==1.6.0
+django-braces==1.11.0
+django-crispy-forms==1.6.1
 django-floppyforms==1.7.0
 
 # Models
-django-model-utils==2.6
+django-model-utils==2.6.1
 
 # Images
-Pillow==3.4.1
+Pillow==4.0.0
 
 # For user registration, either via email or social
 # Well-built with regular release cycles!
-django-allauth==0.27.0
+django-allauth==0.31.0
 
 # Python-PostgreSQL Database Adapter
-psycopg2==2.6.2
+psycopg2==2.7.1
 
 # Unicode slugification
 unicode-slugify==0.1.3
 django-autoslug==1.9.3
 
 # Time zones support
-pytz==2016.7
+pytz==2016.10
 
 # Redis support
-django-redis==4.5.0
+django-redis==4.7.0
 redis==2.10.5
-celery==3.1.24
+celery==4.0.2
+
+# WSGI Handler
+# ------------------------------------------------
+
+gevent==1.2.1
+gunicorn==19.7.1
+
+# Static and Media Storage
+# ------------------------------------------------
+boto==2.46.1
+django-storages-redux==1.3.2
+
+# Mailgun Support
+# ---------------
+django-mailgun==0.9.1
 
 # Your custom requirements go here
-django-taggit==0.21.3
-dropbox==6.9.0
+django-taggit==0.22.0
+dropbox==7.2.1
 django-pure-pagination==0.3.0
-django-filter==0.15.2
-djangorestframework==3.5.0
+django-filter==1.0.2
+djangorestframework==3.6.2
