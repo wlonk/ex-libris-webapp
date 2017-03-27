@@ -44,7 +44,7 @@ celery==4.0.2
 
 # Your custom requirements go here
 django-taggit==0.22.0
-dropbox==6.1
+dropbox==7.2.1
 django-pure-pagination==0.3.0
 django-filter==0.13.0
 djangorestframework==3.3.3
