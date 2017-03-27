@@ -20,8 +20,6 @@ env = environ.Env()
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
 DJANGO_APPS = (
-    # Use modern JS build pipelines:
-    'django_gulp',
     # Default Django apps:
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -150,8 +148,6 @@ TEMPLATES = [
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         'DIRS': [
             str(APPS_DIR.path('templates')),
-            # So we can serve the Ember-generated index.html
-            str(APPS_DIR.path('static/app')),
         ],
         'OPTIONS': {
             # See: https://docs.djangoproject.com/en/dev/ref/settings/
@@ -206,12 +202,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
-
-# DJANGO GULP
-GULP_DEVELOP_COMMAND = '(cd web_client && ember build)'
-GULP_PRODUCTION_COMMAND = '(cd web_client && ember deploy production)'
-# GULP_DEVELOP_COMMAND = 'ember build -dev --watch'
-# GULP_PRODUCTION_COMMAND = 'ember build -prod'
 
 # MEDIA CONFIGURATION
 # ------------------------------------------------------------------------------
