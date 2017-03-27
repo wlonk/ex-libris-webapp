@@ -9,5 +9,5 @@ pytest-env==0.6.0
 coverage==4.3.4
 django_coverage_plugin==1.3
 flake8==2.5.4
-django-test-plus==1.0.12
+django-test-plus==1.0.17
 factory_boy==2.6.1
