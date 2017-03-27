@@ -1,7 +1,7 @@
 # Test dependencies go here.
 -r base.txt
 
-pytest==2.9.1
+pytest==3.0.7
 pytest-pythonpath==0.7
 pytest-cov==2.2.1
 pytest-django==2.9.1
