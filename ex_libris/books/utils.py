@@ -21,15 +21,7 @@ def find_all_files_of_type(dbx, extension):
 
 
 def get_access_token_for_user(user):
-    return (
-        user
-        .socialaccount_set
-        .filter(provider='custom_dropbox_oauth2',)
-        .first()
-        .socialtoken_set
-        .first()
-        .token
-    )
+    return user.dropbox_access_token
 
 
 def get_dropbox_sharing_link(user, dropbox_id):

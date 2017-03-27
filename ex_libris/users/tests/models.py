@@ -9,8 +9,3 @@ def user(django_user_model):
 @pytest.mark.django_db
 def test__str__(user):
     assert str(user) == 'testuser'
-
-
-@pytest.mark.django_db
-def test_get_absolute_url(user):
-    assert user.get_absolute_url() == '/users/testuser/'

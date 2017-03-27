@@ -1,17 +1,21 @@
 # Local development dependencies go here
 -r base.txt
-coverage==4.0.3
-Sphinx==1.4.1
-django-extensions==1.6.1
-Werkzeug==0.11.5
-django-test-plus==1.0.12
-factory_boy==2.6.1
 
-# django-debug-toolbar that works with Django 1.5+
-django-debug-toolbar==1.4
+# Documentation:
+Sphinx
+sphinxcontrib-httpdomain
 
-# improved REPL
-ipdb==0.9.1
+# REPL-land:
+beeprint
+ipython
+pdbpp
 
-# Management tool
-fabric==1.11.1
+# Test support:
+coverage
+django-test-plus
+factory_boy
+flake8
+pytest
+pytest-django
+pytest-cov
+pytest-env

@@ -4,11 +4,9 @@ Local settings
 
 - Run in Debug mode
 - Use console backend for emails
-- Add Django Debug Toolbar
-- Add django-extensions as app
 '''
 
-from .common import *  # noqa
+from .base import *  # noqa
 
 # DEBUG
 # ------------------------------------------------------------------------------
@@ -19,10 +17,7 @@ TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # Note: This key only used for development and testing.
-SECRET_KEY = env(
-    "DJANGO_SECRET_KEY",
-    default='zekhp_vcz-xn3r6g3anbym0abygu5nhrg%5fnoo8f-0x)nbn7&',
-)
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # Mail settings
 # ------------------------------------------------------------------------------
@@ -39,24 +34,6 @@ CACHES = {
         'LOCATION': ''
     }
 }
-
-# django-debug-toolbar
-# ------------------------------------------------------------------------------
-MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-INSTALLED_APPS += ('debug_toolbar', )
-
-INTERNAL_IPS = ('127.0.0.1', '10.0.2.2',)
-
-DEBUG_TOOLBAR_CONFIG = {
-    'DISABLE_PANELS': [
-        'debug_toolbar.panels.redirects.RedirectsPanel',
-    ],
-    'SHOW_TEMPLATE_CONTEXT': True,
-}
-
-# django-extensions
-# ------------------------------------------------------------------------------
-INSTALLED_APPS += ('django_extensions', )
 
 # TESTING
 # ------------------------------------------------------------------------------

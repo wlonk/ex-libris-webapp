@@ -67,3 +67,10 @@ mailhog
 
 # Celerybeat drek
 celerybeat-schedule
+
+# Ember app
+ex_libris/static/app/
+staticfiles/
+
+# Docs
+docs/_build

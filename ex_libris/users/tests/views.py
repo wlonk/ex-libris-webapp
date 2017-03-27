@@ -33,20 +33,6 @@ def user_update_view(rf, user):
     return generate_view(UserUpdateView, rf, user)
 
 
-@pytest.mark.django_db
-def test_get_redirect_url(user_redirect_view):
-    # Expect: '/users/testuser/', as that is the default username for
-    #   the `user` fixture.
-    assert user_redirect_view.get_redirect_url() == '/users/testuser/'
-
-
-@pytest.mark.django_db
-def test_get_success_url(user_update_view):
-    # Expect: '/users/testuser/', as that is the default username for
-    #   the `user` fixture.
-    assert user_update_view.get_success_url() == '/users/testuser/'
-
-
 def test_get_object(user_update_view, user):
     # Expect: user, as that is the request's user object
     assert user_update_view.get_object() == user

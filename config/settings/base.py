@@ -43,12 +43,12 @@ THIRD_PARTY_APPS = (
     'taggit',
     'pure_pagination',
     'rest_framework',
+    'rest_framework.authtoken',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
     'ex_libris.users',  # custom users app
-    'ex_libris.providers.custom_dropbox',  # custom OAuth2 provider
     # Your stuff: custom apps go here
     'ex_libris.books',
 )
@@ -236,7 +236,7 @@ ACCOUNT_ALLOW_REGISTRATION = True
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = 'users:redirect'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/custom_dropbox_oauth2/login/'
 
 # SLUGLIFIER
@@ -262,3 +262,17 @@ PAGINATION_SETTINGS = {
 
 DROPBOX_API_KEY = env.str('DROPBOX_API_KEY')
 DROPBOX_API_SECRET = env.str('DROPBOX_API_SECRET')
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': (
+        'rest_framework.pagination.PageNumberPagination'
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+    ),
+}
