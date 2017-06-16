@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}User: {{ object.username }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  {% if is_self %}
+  <div class="row">
+    <div class="jumbotron text-xs-center">
+      <h1>Welcome, {{ object.username }}!</h1>
+      <p class="lead">
+      Congratulations! You're all signed up. Any PDFs you put in
+      <code>Dropbox/Apps/Ex Libris/</code> will show up here on Ex Libris.
+      </p>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}
+

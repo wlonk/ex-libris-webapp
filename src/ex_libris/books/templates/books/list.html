@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block navbar_extra %}
+<li class="nav-item">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#filter-modal">
+    Filter
+  </button>
+</li>
+<li class="nav-item">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-modal">
+    Edit
+  </button>
+</li>
+{% endblock navbar_extra %}
+
+{% block content %}
+<div id="filter-modal" class="modal fade">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method="get" action=".">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Filter</h4>
+        </div>
+        <div class="modal-body">
+          {{ filter.form }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" value="Filter" class="btn btn-primary">
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="edit-modal" class="modal fade">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form method="post" action="." id="edit_form">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Filter</h4>
+        </div>
+        <div class="modal-body">
+          {{ edit_form }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" value="Edit" class="btn btn-primary">
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<table class="table books">
+  <thead>
+    <th></th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Publisher</th>
+    <th>Series</th>
+    <th>Edition</th>
+    <th>Year</th>
+  </thead>
+{% for book in books.object_list %}
+  <tbody class="{% cycle "odd" "even" %}" data-book_id="{{ book.id }}">
+    <tr>
+      {# TODO use generic app namespace name in url tag? #}
+      <td>
+        <input type="checkbox" class="book-row-checkbox">
+        <a href="{% url "books:detail" id=book.id %}">
+          <span class="octicon octicon-repo"></span>
+        </a>
+      </td>
+      <td tabindex="0" class="has-editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="title" class="editable plain">
+          {{ book }}
+        </span>
+      </td>
+      <td tabindex="0" class="has-editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="typeaheadjs" data-name="author_name" class="editable typeahead author">
+          {{ book.author|default:"" }}
+        </span>
+      </td>
+      <td tabindex="0" class="has-editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="typeaheadjs" data-name="publisher_name" class="editable typeahead publisher">
+          {{ book.publisher|default:"" }}
+        </span>
+      </td>
+      <td tabindex="0" class="has-editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="typeaheadjs" data-name="series_name" class="editable typeahead series">
+          {{ book.series|default:"" }}
+        </span>
+      </td>
+      <td tabindex="0" class="has-editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="edition" class="editable plain">
+          {{ book.edition }}
+        </span>
+      </td>
+      <td tabindex="0" class="has-editable">
+        <span data-url="{% url "books:detail" id=book.id %}" data-type="text" data-name="year" class="editable plain">
+          {{ book.year|default:"" }}
+        </span>
+      </td>
+    </tr>
+    {% if book.tags.all %}
+    <tr>
+      <td colspan="7" class="tags">
+        {% for tag in book.tags.all %}
+        <a href="{% url "books:tags" tag=tag %}" class="label label-pill label-primary">#{{ tag }}</a>
+        {% endfor %}
+      </td>
+    </tr>
+    {% endif %}
+  </tbody>
+{% empty %}
+  <tbody>
+    <tr>
+      <td colspan="7">No books</td>
+    </tr>
+  </tbody>
+{% endfor %}
+</table>
+
+<nav class="text-xs-center">
+  <ul class="pagination">
+  {% if books.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?{{ books.previous_page_number.querystring }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+  {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+  {% endif %}
+  {% for page in books.pages %}
+    {% if page %}
+      {% if page == books.number %}
+        <li class="page-item active">
+          <span class="page-link">{{ page }}</span>
+        </li>
+      {% else %}
+        <li class="page-item">
+          <a class="page-link" href="?{{ page.querystring }}">{{ page }}</a>
+        </li>
+      {% endif %}
+    {% else %}
+        <li class="page-item">
+          <span class="page-link">&hellip;</span>
+        </li>
+    {% endif %}
+  {% endfor %}
+  {% if books.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?{{ books.next_page_number.querystring }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  {% endif %}
+  </ul>
+</nav>
+{% endblock content %}

@@ -1,69 +1,39 @@
-### OSX ###
-.DS_Store
-.AppleDouble
-.LSOverride
-
-### SublimeText ###
-# cache files for sublime text
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
-
-# workspace files are user-specific
-*.sublime-workspace
-
-# project files should be checked into the repository, unless a significant
-# proportion of contributors will probably not be using SublimeText
-# *.sublime-project
-
-# sftp configuration file
-sftp-config.json
-
-# Basics
-*.py[cod]
-__pycache__
-
-# Logs
 *.log
-pip-log.txt
-
-# Unit test / coverage reports
-.coverage
-.tox
-nosetests.xml
-htmlcov
-.cache
-
-# Translations
 *.mo
 *.pot
-
-# Pycharm
-.idea
-
-# Vim
-
-*~
-*.swp
+*.py[cod]
+*.stTheme.cache
+*.sublime-workspace
 *.swo
-
-# npm
-node_modules/
-
-# Compass
-.sass-cache
-
-# virtual environments
+*.swp
+*.tmPreferences.cache
+*.tmlanguage.cache
+*~
+.AppleDouble
+.DS_Store
+.LSOverride
+.cache
+.coverage
 .env
-
-# User-uploaded media
-ex-libris/media/
-
-# Hitch directory
-tests/.hitch
-
-# MailHog binary
-mailhog
-
-# Celerybeat drek
+.env.development.local
+.env.local
+.env.production.local
+.env.test.local
+.idea
+.sass-cache
+.tox
+__pycache__
+build
 celerybeat-schedule
+coverage
+ex-libris/media/
+htmlcov
+mailhog
+node_modules
+nosetests.xml
+npm-debug.log*
+pip-log.txt
+sftp-config.json
+tests/.hitch
+yarn-debug.log*
+yarn-error.log*
