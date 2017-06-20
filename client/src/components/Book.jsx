@@ -38,9 +38,12 @@ const Book = ({ title, author, series, edition, publisher, year }) => {
       <TableRowColumn>{year}</TableRowColumn>
     </TableRow>
   ) : '';
+  const titleStyle = {
+    'font-style': 'italic'
+  };
   return (
     <Card style={style}>
-      <CardTitle title={title} subtitle={author} />
+      <CardTitle title={title} subtitle={author} style={titleStyle} />
       <CardText>
         <Table selectable={false}>
           <TableBody displayRowCheckbox={false}>
