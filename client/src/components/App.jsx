@@ -22,10 +22,12 @@ const style = {
 };
 
 class App extends React.Component {
-  state = {
-    dialogOpen: false,
-    isSignedIn: this.props.auth.getIn(["user", "isSignedIn"])
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      dialogOpen: false,
+    };
+  }
 
   handleOpen () {
     this.setState({dialogOpen: true});
@@ -36,22 +38,26 @@ class App extends React.Component {
   }
 
   render() {
+    const isSignedIn = this.props.auth.getIn(["user", "isSignedIn"]);
+    const addBook = isSignedIn ? (
+      <FloatingActionButton
+        style={style}
+        onTouchTap={this.handleOpen.bind(this)}
+      >
+        <ContentAdd />
+      </FloatingActionButton>
+    ) : '';
     return (
       <div>
         <AuthGlobals />
         <AppBar
           title="Ex Libris"
-          iconElementRight={this.state.isSignedIn ?
+          iconElementRight={isSignedIn ?
               <SignOutButton /> :
               <OAuthSignInButton provider="dropbox"/>}
         />
         <BookList />
-        <FloatingActionButton
-          style={style}
-          onTouchTap={this.handleOpen.bind(this)}
-        >
-          <ContentAdd />
-        </FloatingActionButton>
+        {addBook}
         <Dialog
           open={this.state.dialogOpen}
           onRequestClose={this.handleClose.bind(this)}

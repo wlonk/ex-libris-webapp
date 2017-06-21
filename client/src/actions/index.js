@@ -1,22 +1,61 @@
-let nextBookId = 0;
-export const addBook = (data) => {
-  return {
-    type: 'ADD_BOOK',
-    id: nextBookId++,
-    data
-  };
-};
+import { fetch } from "redux-auth";
 
-export const setVisibilityFilter = (filter) => {
-  return {
-    type: 'SET_VISIBILITY_FILTER',
-    filter
-  };
-};
+import * as types from '../constants/ActionTypes';
+import api from '../api';
 
-export const toggleBook = (id) => {
-  return {
-    type: 'TOGGLE_BOOK',
-    id
+
+// from: https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+export function addBook(data) {
+  const newBook = {
+    title: data.title,
+    author: data.author,
+    series: data.series,
+    edition: data.edition,
+    publisher: data.publisher,
+    year: data.year
   };
-};
+
+  return (dispatch) => {
+    fetch(api.books(), {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify(newBook)
+    }).then((response) => response.json()).then((json) => dispatch({
+      type: types.ADD_BOOK,
+      book: json
+    }))
+  };
+}
+
+
+export function getBooks() {
+  return (dispatch) => {
+    fetch(api.books(), {
+      credentials: 'same-origin'
+    }).then((response) => response.json()).then((json) => dispatch({
+      type: types.GET_BOOKS,
+      books: json
+    }))
+  };
+}
