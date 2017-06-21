@@ -4,6 +4,7 @@ from .models import (
     Author,
     Publisher,
     Series,
+    Book,
 )
 
 
@@ -31,4 +32,19 @@ class SeriesSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'name',
+        )
+
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = (
+            'id',
+            'title',
+            'owner',
+            'author',
+            'publisher',
+            'series',
+            'edition',
+            'year',
         )

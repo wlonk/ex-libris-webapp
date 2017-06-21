@@ -35,6 +35,7 @@ from .serializers import (
     AuthorSerializer,
     PublisherSerializer,
     SeriesSerializer,
+    BookSerializer,
 )
 from .permissions import ReadOnly
 from .utils import build_args_for_sync_dropbox
@@ -204,3 +205,11 @@ class PublisherViewSet(TypeaheadDataViewSet):
 class SeriesViewSet(TypeaheadDataViewSet):
     model = Series
     serializer_class = SeriesSerializer
+
+
+class BookViewSet(viewsets.ModelViewSet):
+    model = Book
+    serializer_class = BookSerializer
+
+    def get_queryset(self):
+        return self.model.objects.all()

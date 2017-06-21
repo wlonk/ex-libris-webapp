@@ -6,8 +6,7 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^$', views.list, name="list"),
-    url(r'^tags/(?P<tag>[^/]+)/$', views.tags, name="tags"),
+    # TODO: something about this:
     url(
         r'^dropbox-webhook/$',
         views.DropboxWebhookView.as_view(),
@@ -17,23 +16,24 @@ urlpatterns = [
 
 router = routers.SimpleRouter()
 router.register(
-    r'api/authors',
+    r'authors',
     views.AuthorViewSet,
     base_name='author',
 )
 router.register(
-    r'api/publishers',
+    r'publishers',
     views.PublisherViewSet,
     base_name='publisher',
 )
 router.register(
-    r'api/series',
+    r'series',
     views.SeriesViewSet,
     base_name='series',
 )
+router.register(
+    r'books',
+    views.BookViewSet,
+    base_name='books',
+)
 
 urlpatterns += router.urls
-
-urlpatterns += [
-    url(r'^(?P<id>[^/]+)/$', views.detail, name='detail'),
-]
