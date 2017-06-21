@@ -23,6 +23,7 @@
 .sass-cache
 .tox
 __pycache__
+_build
 build
 celerybeat-schedule
 coverage
