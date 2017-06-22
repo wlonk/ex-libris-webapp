@@ -48,3 +48,8 @@ class BookSerializer(serializers.ModelSerializer):
             'edition',
             'year',
         )
+        extra_kwargs = {
+            'owner': {
+                'read_only': True,
+            },
+        }

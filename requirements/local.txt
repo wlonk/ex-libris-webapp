@@ -1,12 +1,14 @@
 # Local development dependencies go here
 -r base.txt
-Sphinx==1.6.2
-coverage==4.4.1
+Sphinx
+coverage
 django-extensions==1.7.9
-factory_boy==2.8.1
-flake8==3.3.0
-pytest-cov==2.5.1
-pytest-django==3.1.2
-pytest-env==0.6.2
-pytest-pythonpath==0.7.1
-pytest==3.1.2
+factory_boy
+flake8
+ipython
+pdbpp
+pytest
+pytest-cov
+pytest-django
+pytest-env
+pytest-pythonpath
