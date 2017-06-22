@@ -3,7 +3,6 @@ from django.db.utils import IntegrityError
 
 import dropbox
 from dropbox.exceptions import ApiError
-from celery import shared_task
 
 import logging
 
@@ -18,7 +17,6 @@ User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
-@shared_task
 def sync_dropbox(access_token, user_id):
     dbx = dropbox.Dropbox(access_token)
     try:
@@ -51,7 +49,6 @@ def sync_dropbox(access_token, user_id):
     )
 
 
-@shared_task
 def sync_for_all_users():
     for user in User.objects.filter(is_active=True):
         args = build_args_for_sync_dropbox(user)

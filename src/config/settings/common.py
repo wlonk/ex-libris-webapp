@@ -37,7 +37,6 @@ THIRD_PARTY_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'taggit',
-    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
 )
@@ -58,7 +57,6 @@ MIDDLEWARE_CLASSES = (
     # Make sure djangosecure.middleware.SecurityMiddleware is listed first
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -77,14 +75,6 @@ MIGRATION_MODULES = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = env.bool("DJANGO_DEBUG", False)
 
-# FIXTURE CONFIGURATION
-# ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/
-#   #std:setting-FIXTURE_DIRS
-FIXTURE_DIRS = (
-    str(APPS_DIR.path('fixtures')),
-)
-
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
 EMAIL_BACKEND = env(
@@ -95,9 +85,7 @@ EMAIL_BACKEND = env(
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = (
-    ("""Kit La Touche""", 'kit@transneptune.net'),
-)
+ADMINS = ()
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
@@ -234,49 +222,12 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'users:redirect'
 LOGIN_URL = '/accounts/dropbox_oauth2/login/'
 
-# SLUGLIFIER
-AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
-
-# CELERY
-INSTALLED_APPS += ('ex_libris.taskapp.celery.CeleryConfig',)
-BROKER_URL = env("CELERY_BROKER_URL", default='django://')
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_SERIALIZER = 'json'
-# END CELERY
-
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
 
 # Your common stuff: Below this line define 3rd party library settings
-PAGINATION_SETTINGS = {
-    'PAGE_RANGE_DISPLAYED': 5,
-    'MARGIN_PAGES_DISPLAYED': 2,
-    'SHOW_FIRST_PAGE_WHEN_INVALID': False,
-}
-
 DROPBOX_API_KEY = env.str('DROPBOX_API_KEY')
 DROPBOX_API_SECRET = env.str('DROPBOX_API_SECRET')
-
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_HEADERS = (
-    'accept',
-    'accept-encoding',
-    'access-token',
-    'authorization',
-    'client',
-    'content-type',
-    'dnt',
-    'expiry',
-    'if-modified-since',
-    'origin',
-    'token',
-    'uid',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-)
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

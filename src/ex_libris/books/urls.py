@@ -14,7 +14,7 @@ urlpatterns = [
     ),
 ]
 
-router = routers.SimpleRouter()
+router = routers.DefaultRouter()
 router.register(
     r'authors',
     views.AuthorViewSet,

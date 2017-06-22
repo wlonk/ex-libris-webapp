@@ -15,11 +15,6 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 
-from pure_pagination import (
-    Paginator,
-    PageNotAnInteger,
-)
-
 from rest_framework import viewsets
 
 from . import tasks
@@ -46,45 +41,33 @@ User = get_user_model()
 # queryset attribute as appropriate.
 @login_required
 def tags(request, tag):
-    try:
-        page = request.GET.get('page', 1)
-    except PageNotAnInteger:
-        page = 1
-    objects = BookFilter(
+    books = BookFilter(
         request.GET,
         queryset=Book.objects.filter(owner=request.user).filter(tags__name=tag),
     )
-    p = Paginator(objects, 10, request=request)
-    books = p.page(page)
     return render(
         request,
         "books/list.html",
         {
             "books": books,
-            "filter": objects,
+            "filter": None,
         }
     )
 
 
 @login_required
 def list(request):
-    try:
-        page = request.GET.get('page', 1)
-    except PageNotAnInteger:
-        page = 1
-    objects = BookFilter(
+    books = BookFilter(
         request.GET,
         queryset=Book.objects.filter(owner=request.user),
     )
-    p = Paginator(objects, 10, request=request)
-    books = p.page(page)
     edit_form = BookForm()
     return render(
         request,
         "books/list.html",
         {
             "books": books,
-            "filter": objects,
+            "filter": None,
             "edit_form": edit_form,
         }
     )

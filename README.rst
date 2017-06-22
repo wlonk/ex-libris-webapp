@@ -49,25 +49,6 @@ in some ``grunt`` magic::
     $ npm install -g grunt-cli
     $ grunt serve
 
-Celery
-^^^^^^
-
-This app comes with Celery.
-
-To run a celery worker:
-
-.. code-block:: bash
-
-    celery worker -B --app=ex_libris.taskapp --loglevel info --autoreload
-
-But ``grunt serve`` will do this for you anyway.
-
-Please note: For Celery's import magic to work, it is important *where* the
-celery commands are run. If you are in the same folder with *manage.py*, you
-should be right.
-
-It's time to write the code!
-
 Running end to end integration tests
 ------------------------------------
 
@@ -91,8 +72,8 @@ python requirements so the first time it runs it may take a while.
 
 Subsequent test runs will be much quicker.
 
-The testing framework runs Django, Celery (if enabled), Postgres, HitchSMTP (a
-mock SMTP server), Firefox/Selenium and Redis.
+The testing framework runs Django, Postgres, HitchSMTP (a mock SMTP
+server), Firefox/Selenium and Redis.
 
 Deployment
 ----------
