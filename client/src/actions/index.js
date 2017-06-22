@@ -53,9 +53,13 @@ export function getBooks() {
   return (dispatch) => {
     fetch(api.books(), {
       credentials: 'same-origin'
-    }).then((response) => response.json()).then((json) => dispatch({
-      type: types.GET_BOOKS,
-      books: json
-    }))
+    }).then(
+      (response) => response.json()
+    ).then((books) => {
+      return dispatch({
+        type: types.GET_BOOKS,
+        books
+      });
+    });
   };
 }

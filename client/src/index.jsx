@@ -15,15 +15,13 @@ import registerServiceWorker from './registerServiceWorker';
 injectTapEventPlugin();
 
 
-const store = compose(
-  applyMiddleware(thunk)
-)(createStore)(bookApp);
+const store = compose(applyMiddleware(thunk))(createStore)(bookApp);
 
 
 // OAuth2 configuration:
 store.dispatch(configure({
   // TODO:
-  apiUrl: 'http://localhost',
+  apiUrl: '',
   // signOutPath: '/evil_user_auth/sign_out',
   // TODO: this should be nested under /api/:
   tokenValidationPath: '/users/validate_token/',

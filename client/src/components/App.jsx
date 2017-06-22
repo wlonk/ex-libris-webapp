@@ -8,6 +8,7 @@ import { AuthGlobals } from "redux-auth/material-ui-theme";
 import { OAuthSignInButton } from "redux-auth/material-ui-theme";
 import { SignOutButton } from "redux-auth/material-ui-theme";
 
+import { getBooks } from '../actions';
 import BookList from './BookList';
 import AddBook from '../containers/AddBook';
 
@@ -29,15 +30,16 @@ class App extends React.Component {
     };
   }
 
-  handleOpen () {
+  handleOpen() {
     this.setState({dialogOpen: true});
   }
 
-  handleClose () {
+  handleClose() {
     this.setState({dialogOpen: false});
   }
 
   render() {
+    this.props.dispatch(getBooks());
     const isSignedIn = this.props.auth.getIn(["user", "isSignedIn"]);
     const addBook = isSignedIn ? (
       <FloatingActionButton

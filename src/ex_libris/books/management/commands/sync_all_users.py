@@ -4,4 +4,4 @@ from ...tasks import sync_for_all_users
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        sync_for_all_users.delay()
+        sync_for_all_users()

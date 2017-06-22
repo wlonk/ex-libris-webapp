@@ -4,13 +4,18 @@ import PropTypes from 'prop-types';
 
 import Book from './Book';
 
-const RawBookList = ({ books }) => (
-  <div>
-    {books.map((book) => (
-      <Book key={book.id} {...book} />
-    ))}
-  </div>
-);
+
+class RawBookList extends React.Component {
+  render() {
+    return (
+      <div>
+        {this.props.books.map((book) => (
+          <Book key={book.id} {...book} />
+        ))}
+      </div>
+    );
+  }
+};
 
 RawBookList.propTypes = {
   books: PropTypes.arrayOf(
@@ -27,16 +32,6 @@ RawBookList.propTypes = {
 };
 
 
-
-const mapStateToProps = (state) => {
-  return {
-    books: state.books
-  };
-};
-
-
-const BookList = connect(
-  mapStateToProps
-)(RawBookList);
+const BookList = connect(({ books }) => ({ books }))(RawBookList);
 
 export default BookList;
