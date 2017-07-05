@@ -231,7 +231,6 @@ DROPBOX_API_SECRET = env.str('DROPBOX_API_SECRET')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.authentication.BasicAuthentication',
         'ex_libris.users.authentication.BearerAuthentication',
     ),
 }

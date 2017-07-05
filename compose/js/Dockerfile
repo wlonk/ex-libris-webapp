@@ -1,6 +1,6 @@
 FROM node:8.1.2
 
-COPY ./package.json /package.json
+COPY ./client/package.json /package.json
 
 RUN yarn
 
