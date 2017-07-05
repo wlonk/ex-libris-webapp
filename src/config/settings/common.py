@@ -27,7 +27,8 @@ DJANGO_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic',
+    # 'whitenoise.runserver_nostatic',
+    'channels',
     'django.contrib.staticfiles',
     'django.contrib.admin',
 )
@@ -168,7 +169,7 @@ TEMPLATES = [
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(CLIENT_BUILD_DIR.path('static'))
+STATIC_ROOT = str(PROJECT_ROOT.path('collected-static'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
@@ -176,7 +177,7 @@ STATIC_URL = '/static/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/
 #   #std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
-    str(APPS_DIR.path('static')),
+    str(CLIENT_BUILD_DIR.path('static')),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/
