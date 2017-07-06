@@ -9,15 +9,12 @@ def extension_matches(extension, name):
 
 
 def find_all_files_of_type(dbx, extension):
-    results = []
-    entries = dbx.files_list_folder(
-        '',
-        recursive=True,
-    ).entries
-    for entry in entries:
-        if extension_matches(extension, entry.name):
-            results.append(entry)
-    return results
+    return [
+        entry
+        for entry
+        in dbx.files_list_folder('', recursive=True)
+        if extension_matches(extension, entry.name)
+    ]
 
 
 def get_access_token_for_user(user):

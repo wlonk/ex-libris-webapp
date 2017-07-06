@@ -17,7 +17,7 @@ django-model-utils==3.0.0
 django-braces==1.11.0
 
 # Images
-Pillow==4.1.1
+Pillow==4.2.1
 
 # For user registration, either via email or social
 django-allauth==0.32.0
@@ -34,7 +34,7 @@ asgi_redis==1.4.2
 
 # Your custom requirements go here
 django-taggit==0.22.1
-dropbox==7.3.1
+dropbox==8.0.0
 django-filter==1.0.4
 djangorestframework==3.6.3
 
