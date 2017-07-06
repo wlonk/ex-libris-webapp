@@ -1,61 +1,101 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Card, CardTitle, CardText} from 'material-ui/Card';
+import {
+  Card,
+  CardTitle,
+  CardText,
+  CardActions,
+} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 import {
   Table,
   TableBody,
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import Dialog from 'material-ui/Dialog';
+
+import EditBook from './EditBook';
 
 
-const style = {
-  'margin': '1em'
-};
+class Book extends React.Component {
+  constructor(props) {
+    super(props);
+    this.style = {
+      'margin': '1em'
+    };
+    this.state = {
+      dialogOpen: false,
+    };
+  }
 
-const Book = ({ title, author, series, edition, publisher, year }) => {
-  const seriesNode = series ? (
-    <TableRow>
-      <TableRowColumn>Series:</TableRowColumn>
-      <TableRowColumn>{series}</TableRowColumn>
-    </TableRow>
-  ) : '';
-  const editionNode = edition ? (
-    <TableRow>
-      <TableRowColumn>Edition:</TableRowColumn>
-      <TableRowColumn>{edition}</TableRowColumn>
-    </TableRow>
-  ) : '';
-  const publisherNode = publisher ? (
-    <TableRow>
-      <TableRowColumn>Publisher:</TableRowColumn>
-      <TableRowColumn>{publisher}</TableRowColumn>
-    </TableRow>
-  ) : '';
-  const yearNode = year ? (
-    <TableRow>
-      <TableRowColumn>Year:</TableRowColumn>
-      <TableRowColumn>{year}</TableRowColumn>
-    </TableRow>
-  ) : '';
-  const titleStyle = {
-    'font-style': 'italic'
-  };
-  return (
-    <Card style={style}>
-      <CardTitle title={title} subtitle={author} style={titleStyle} />
-      <CardText>
-        <Table selectable={false}>
-          <TableBody displayRowCheckbox={false}>
-            {seriesNode}
-            {editionNode}
-            {publisherNode}
-            {yearNode}
-          </TableBody>
-        </Table>
-      </CardText>
-    </Card>
-  );
+  handleOpen() {
+    this.setState({dialogOpen: true});
+  }
+
+  handleClose() {
+    this.setState({dialogOpen: false});
+  }
+
+  render() {
+    const seriesNode = this.props.series ? (
+      <TableRow>
+        <TableRowColumn>Series:</TableRowColumn>
+        <TableRowColumn>{this.props.series}</TableRowColumn>
+      </TableRow>
+    ) : '';
+    const editionNode = this.props.edition ? (
+      <TableRow>
+        <TableRowColumn>Edition:</TableRowColumn>
+        <TableRowColumn>{this.props.edition}</TableRowColumn>
+      </TableRow>
+    ) : '';
+    const publisherNode = this.props.publisher ? (
+      <TableRow>
+        <TableRowColumn>Publisher:</TableRowColumn>
+        <TableRowColumn>{this.props.publisher}</TableRowColumn>
+      </TableRow>
+    ) : '';
+    const yearNode = this.props.year ? (
+      <TableRow>
+        <TableRowColumn>Year:</TableRowColumn>
+        <TableRowColumn>{this.props.year}</TableRowColumn>
+      </TableRow>
+    ) : '';
+    const titleStyle = {
+      'font-style': 'italic'
+    };
+    return (
+      <Card style={this.style}>
+        <CardTitle title={this.props.title} subtitle={this.props.author} style={titleStyle} />
+        <CardText>
+          <Table selectable={false}>
+            <TableBody displayRowCheckbox={false}>
+              {seriesNode}
+              {editionNode}
+              {publisherNode}
+              {yearNode}
+            </TableBody>
+          </Table>
+        </CardText>
+        <CardActions>
+          <FlatButton
+            label="Edit"
+            onTouchTap={this.handleOpen.bind(this)}
+          />
+        </CardActions>
+        <Dialog
+          open={this.state.dialogOpen}
+          onRequestClose={this.handleClose.bind(this)}
+        >
+          <EditBook
+            props={this.props}
+            handlerCloseDialog={this.handleClose.bind(this)}
+          />
+        </Dialog>
+      </Card>
+    );
+  }
 };
 
 Book.propTypes = {

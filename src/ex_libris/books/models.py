@@ -87,7 +87,7 @@ class Book(models.Model):
 
 def initial_import(request, user, **kwargs):
     from . import tasks
-    tasks.sync_dropbox.delay(*build_args_for_sync_dropbox(user))
+    # tasks.sync_dropbox.delay(*build_args_for_sync_dropbox(user))
 
 
 user_signed_up.connect(initial_import)

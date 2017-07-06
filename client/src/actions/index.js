@@ -48,6 +48,34 @@ export function addBook(data) {
   };
 }
 
+export function editBook(data) {
+  const book = {
+    id: data.id,
+    title: data.title,
+    author: data.author,
+    series: data.series,
+    edition: data.edition,
+    publisher: data.publisher,
+    year: data.year
+  };
+
+  return (dispatch) => {
+    fetch(api.books(data.id), {
+      method: 'put',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify(book)
+    }).then((response) => response.json()).then((json) => dispatch({
+      type: types.EDIT_BOOK,
+      book: json
+    }))
+  };
+}
+
 
 export function getBooks() {
   return (dispatch) => {

@@ -15,7 +15,8 @@ import registerServiceWorker from './registerServiceWorker';
 injectTapEventPlugin();
 
 
-const store = compose(applyMiddleware(thunk))(createStore)(bookApp);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = composeEnhancers(applyMiddleware(thunk))(createStore)(bookApp);
 
 
 // OAuth2 configuration:
