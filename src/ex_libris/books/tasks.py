@@ -9,7 +9,7 @@ import logging
 from .models import Book
 from .utils import (
     find_all_files_of_type,
-    build_args_for_sync_dropbox,
+    build_kwargs_for_sync_dropbox,
 )
 User = get_user_model()
 
@@ -17,7 +17,9 @@ User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
-def sync_dropbox(access_token, user_id):
+def sync_dropbox(message):
+    access_token = message['access_token']
+    user_id = message['user_id']
     dbx = dropbox.Dropbox(access_token)
     try:
         entries = find_all_files_of_type(dbx, 'pdf')
@@ -51,5 +53,5 @@ def sync_dropbox(access_token, user_id):
 
 def sync_for_all_users():
     for user in User.objects.filter(is_active=True):
-        args = build_args_for_sync_dropbox(user)
-        sync_dropbox(*args)
+        kwargs = build_kwargs_for_sync_dropbox(user)
+        sync_dropbox(kwargs)

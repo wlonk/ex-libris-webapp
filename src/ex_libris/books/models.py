@@ -3,12 +3,14 @@ import datetime
 from django.conf import settings
 from django.db import models
 
+from channels import Channel
+
 from taggit.managers import TaggableManager
 from allauth.account.signals import user_signed_up
 
 from .utils import (
     get_dropbox_sharing_link,
-    build_args_for_sync_dropbox,
+    build_kwargs_for_sync_dropbox,
 )
 
 
@@ -86,8 +88,7 @@ class Book(models.Model):
 
 
 def initial_import(request, user, **kwargs):
-    from . import tasks
-    # tasks.sync_dropbox.delay(*build_args_for_sync_dropbox(user))
+    Channel('sync-dropbox').send(build_kwargs_for_sync_dropbox(user))
 
 
 user_signed_up.connect(initial_import)

@@ -9,10 +9,11 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 
+from channels import Channel
+
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from . import tasks
 from .models import (
     Book,
     Author,
@@ -26,7 +27,7 @@ from .serializers import (
     BookSerializer,
 )
 from .permissions import ReadOnly
-from .utils import build_args_for_sync_dropbox
+from .utils import build_kwargs_for_sync_dropbox
 
 User = get_user_model()
 
@@ -59,8 +60,8 @@ class DropboxWebhookView(View):
             if not right_user:
                 # TODO log warning?
                 continue
-            args = build_args_for_sync_dropbox(user)
-            tasks.sync_dropbox.delay(*args)
+            kwargs = build_kwargs_for_sync_dropbox(user)
+            Channel('sync-dropbox').send(kwargs)
         return HttpResponse('')
 
 
