@@ -89,7 +89,7 @@ class Book extends React.Component {
           onRequestClose={this.handleClose.bind(this)}
         >
           <EditBook
-            props={this.props}
+            {...this.props}
             handlerCloseDialog={this.handleClose.bind(this)}
           />
         </Dialog>

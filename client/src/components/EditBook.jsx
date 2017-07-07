@@ -4,88 +4,98 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 
-import { addBook } from '../actions';
+import { editBook } from '../actions';
 
 
-const extractValues = (obj) => {
-  return Object.keys(obj).reduce((previous, current) => {
-    previous[current] = obj[current].input.value;
-    return previous;
-  }, {});
-}
-
-const resetValues = (obj) => {
-  for (let key in obj) {
-    obj[key].input.value = '';
+class EditBook extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: props.id,
+      title: props.title,
+      author: props.author,
+      series: props.series,
+      edition: props.edition,
+      publisher: props.publisher,
+      year: props.year,
+    };
+    this.style = {
+      padding: '2em'
+    };
   }
-};
 
-let EditBook = ({ handlerCloseDialog, dispatch }) => {
-  let data = {
-    title: '',
-    author: '',
-    series: '',
-    edition: '',
-    publisher: '',
-    year: ''
-  };
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
 
-  const style = {
-    padding: '2em'
-  };
+    this.setState({
+      [name]: value
+    });
+  }
 
-  return (
-    <Paper style={style}>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (data.title.input && !data.title.input.value.trim()) {
-            return;
-          }
-          dispatch(addBook(extractValues(data)));
-          resetValues(data);
-          handlerCloseDialog();
-        }}
-      >
-        <TextField
-          autoFocus={true}
-          ref={(node) => { data.title = node }}
-          floatingLabelText="Title"
-          fullWidth={true}
-        />
-        <TextField
-          ref={(node) => { data.author = node }}
-          floatingLabelText="Author"
-          fullWidth={true}
-        />
-        <TextField
-          ref={(node) => { data.series = node }}
-          floatingLabelText="Series"
-          fullWidth={true}
-        />
-        <TextField
-          ref={(node) => { data.edition = node }}
-          floatingLabelText="Edition"
-          fullWidth={true}
-        />
-        <TextField
-          ref={(node) => { data.publisher = node }}
-          floatingLabelText="Publisher"
-          fullWidth={true}
-        />
-        <TextField
-          ref={(node) => { data.year = node }}
-          floatingLabelText="Year"
-          fullWidth={true}
-        />
-        <RaisedButton
-          type="submit"
-          label="Edit Book"
-          primary={true}
-        />
-      </form>
-    </Paper>
-  );
+  render() {
+    return (
+      <Paper style={this.style}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            this.props.dispatch(editBook(this.state));
+            this.props.handlerCloseDialog();
+          }}
+        >
+          <TextField
+            autoFocus={true}
+            floatingLabelText="Title"
+            fullWidth={true}
+            name="title"
+            value={this.state.title}
+            onChange={this.handleInputChange.bind(this)}
+          />
+          <TextField
+            floatingLabelText="Author"
+            fullWidth={true}
+            name="author"
+            value={this.state.author}
+            onChange={this.handleInputChange.bind(this)}
+          />
+          <TextField
+            floatingLabelText="Series"
+            fullWidth={true}
+            name="series"
+            value={this.state.series}
+            onChange={this.handleInputChange.bind(this)}
+          />
+          <TextField
+            floatingLabelText="Edition"
+            fullWidth={true}
+            name="edition"
+            value={this.state.edition}
+            onChange={this.handleInputChange.bind(this)}
+          />
+          <TextField
+            floatingLabelText="Publisher"
+            fullWidth={true}
+            name="publisher"
+            value={this.state.publisher}
+            onChange={this.handleInputChange.bind(this)}
+          />
+          <TextField
+            floatingLabelText="Year"
+            fullWidth={true}
+            name="year"
+            value={this.state.year}
+            onChange={this.handleInputChange.bind(this)}
+          />
+          <RaisedButton
+            type="submit"
+            label="Edit Book"
+            primary={true}
+          />
+        </form>
+      </Paper>
+    );
+  }
 };
 EditBook = connect()(EditBook);
 
