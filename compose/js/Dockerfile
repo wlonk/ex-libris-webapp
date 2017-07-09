@@ -1,9 +1,9 @@
-FROM node:8.1.2
+FROM node:8.1
 
-COPY ./client/package.json /package.json
+WORKDIR /app
 
 RUN yarn
 
-WORKDIR /app
+ENV PATH="/app/node_modules/.bin:${PATH}"
 
 CMD ["yarn", "watch"]
