@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Book from './Book';
 
 
-class RawBookList extends React.Component {
+class BookList extends React.Component {
   render() {
     return (
       <div>
@@ -17,10 +17,10 @@ class RawBookList extends React.Component {
   }
 };
 
-RawBookList.propTypes = {
+BookList.propTypes = {
   books: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       author: PropTypes.string,
       series: PropTypes.string,
@@ -32,6 +32,6 @@ RawBookList.propTypes = {
 };
 
 
-const BookList = connect(({ books }) => ({ books }))(RawBookList);
+BookList = connect(({ books }) => ({ books }))(BookList);
 
 export default BookList;

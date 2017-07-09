@@ -43,7 +43,7 @@ module.exports = {
     // the line below with these two lines if you prefer the stock client:
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
-    require.resolve('react-dev-utils/webpackHotDevClient'),
+    // require.resolve('react-dev-utils/webpackHotDevClient'),
     // We ship a few polyfills by default:
     require.resolve('./polyfills'),
     // Errors should be considered fatal in development
@@ -225,8 +225,6 @@ module.exports = {
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
     new webpack.DefinePlugin(env.stringified),
-    // This is necessary to emit hot updates (currently CSS only):
-    new webpack.HotModuleReplacementPlugin(),
     // Watcher doesn't work well if you mistype casing in a path so we use
     // a plugin that prints an error when you attempt to do this.
     // See https://github.com/facebookincubator/create-react-app/issues/240

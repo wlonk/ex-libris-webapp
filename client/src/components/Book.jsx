@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Checkbox from 'material-ui/Checkbox';
 import {
   Card,
   CardTitle,
@@ -21,11 +22,16 @@ import EditBook from './EditBook';
 class Book extends React.Component {
   constructor(props) {
     super(props);
-    this.style = {
-      'margin': '1em'
-    };
     this.state = {
-      dialogOpen: false,
+      dialogOpen: false
+    };
+    this.styles = {
+      topLevel: {
+        margin: '1em'
+      },
+      title: {
+        fontStyle: 'italic'
+      }
     };
   }
 
@@ -62,12 +68,15 @@ class Book extends React.Component {
         <TableRowColumn>{this.props.year}</TableRowColumn>
       </TableRow>
     ) : '';
-    const titleStyle = {
-      'font-style': 'italic'
-    };
     return (
-      <Card style={this.style}>
-        <CardTitle title={this.props.title} subtitle={this.props.author} style={titleStyle} />
+      <Card
+        style={this.styles.topLevel}
+      >
+        <CardTitle
+          title={this.props.title}
+          subtitle={this.props.author}
+          style={this.styles.title}
+        />
         <CardText>
           <Table selectable={false}>
             <TableBody displayRowCheckbox={false}>
@@ -99,6 +108,7 @@ class Book extends React.Component {
 };
 
 Book.propTypes = {
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   author: PropTypes.string,
   series: PropTypes.string,

@@ -36,6 +36,8 @@ class SeriesSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
+    id = serializers.CharField()
+
     class Meta:
         model = Book
         fields = (
