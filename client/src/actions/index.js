@@ -22,14 +22,36 @@ function getCookie(name) {
 }
 
 
+function translateBookFromServer(book) {
+  return {
+    ...book,
+    author: book.author ? book.author.name : null,
+    series: book.series ? book.series.name : null,
+    publisher: book.publisher ? book.publisher.name : null
+  };
+}
+
+function translateBooksFromServer(books) {
+  return books.map
+    ? books.map(translateBookFromServer)
+    : books;
+}
+
+
 export function editBook(data) {
   const book = {
     id: data.id,
-    title: data.title,
-    author: data.author,
-    series: data.series,
-    edition: data.edition,
-    publisher: data.publisher,
+    title: data.title || '',
+    author: {
+      name: data.author || ''
+    },
+    series: {
+      name: data.series || ''
+    },
+    edition: data.edition || '',
+    publisher: {
+      name: data.publisher || ''
+    },
     year: data.year
   };
 
@@ -43,10 +65,13 @@ export function editBook(data) {
       },
       credentials: 'same-origin',
       body: JSON.stringify(book)
-    }).then((response) => response.json()).then((json) => dispatch({
-      type: types.EDIT_BOOK,
-      book: json
-    }))
+    })
+      .then((response) => response.json())
+      .then(translateBookFromServer)
+      .then((book) => dispatch({
+        type: types.EDIT_BOOK,
+        data: book
+      }))
   };
 }
 
@@ -54,14 +79,18 @@ export function editBook(data) {
 export function getBooks() {
   return (dispatch) => {
     fetch(api.books(), {
+      headers: {
+        'Accept': 'application/json'
+      },
       credentials: 'same-origin'
-    }).then(
-      (response) => response.json()
-    ).then((books) => {
-      return dispatch({
-        type: types.GET_BOOKS,
-        books
+    })
+      .then((response) => response.json())
+      .then(translateBooksFromServer)
+      .then((books) => {
+        return dispatch({
+          type: types.GET_BOOKS,
+          books
+        });
       });
-    });
   };
 }

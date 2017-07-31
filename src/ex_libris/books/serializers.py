@@ -17,6 +17,11 @@ class AuthorSerializer(serializers.ModelSerializer):
             'id',
             'name',
         )
+        extra_kwargs = {
+            'name': {
+                'allow_blank': True,
+            },
+        }
 
 
 class PublisherSerializer(serializers.ModelSerializer):
@@ -28,6 +33,11 @@ class PublisherSerializer(serializers.ModelSerializer):
             'id',
             'name',
         )
+        extra_kwargs = {
+            'name': {
+                'allow_blank': True,
+            },
+        }
 
 
 class SeriesSerializer(serializers.ModelSerializer):
@@ -39,6 +49,11 @@ class SeriesSerializer(serializers.ModelSerializer):
             'id',
             'name',
         )
+        extra_kwargs = {
+            'name': {
+                'allow_blank': True,
+            },
+        }
 
 
 class BookSerializer(serializers.ModelSerializer):
@@ -51,9 +66,12 @@ class BookSerializer(serializers.ModelSerializer):
         # We want to always create a new related obj, so as not to
         # surprise-modify other books.
         data = validated_data.pop(name)
-        nested_obj = klass.objects.filter(**data).first()
-        if not nested_obj:
-            nested_obj = klass.objects.create(**data)
+        if not data.get('name'):
+            nested_obj = None
+        else:
+            nested_obj = klass.objects.filter(**data).first()
+            if not nested_obj:
+                nested_obj = klass.objects.create(**data)
         setattr(instance, name, nested_obj)
 
     def update(self, instance, validated_data):

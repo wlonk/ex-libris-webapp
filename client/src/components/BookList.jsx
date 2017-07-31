@@ -22,11 +22,11 @@ BookList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
+      edition: PropTypes.string,
+      year: PropTypes.number,
       author: PropTypes.string,
       series: PropTypes.string,
-      edition: PropTypes.string,
-      publisher: PropTypes.string,
-      year: PropTypes.string
+      publisher: PropTypes.string
     }).isRequired
   ).isRequired
 };

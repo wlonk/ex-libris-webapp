@@ -9,9 +9,9 @@ const books = (state = [], action) => {
       ];
     case types.EDIT_BOOK:
       return state.map(
-        (book) => book.id === action.id ?
+        (book) => book.id === action.data.id ?
           {
-            id: action.id,
+            id: action.data.id,
             title: action.data.title,
             author: action.data.author,
             series: action.data.series,
