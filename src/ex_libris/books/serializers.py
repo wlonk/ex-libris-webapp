@@ -9,6 +9,8 @@ from .models import (
 
 
 class AuthorSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(read_only=True)
+
     class Meta:
         model = Author
         fields = (
@@ -18,6 +20,8 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 
 class PublisherSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(read_only=True)
+
     class Meta:
         model = Publisher
         fields = (
@@ -27,6 +31,8 @@ class PublisherSerializer(serializers.ModelSerializer):
 
 
 class SeriesSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(read_only=True)
+
     class Meta:
         model = Series
         fields = (
@@ -36,7 +42,40 @@ class SeriesSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    id = serializers.CharField()
+    id = serializers.CharField(read_only=True)
+    author = AuthorSerializer()
+    publisher = PublisherSerializer()
+    series = SeriesSerializer()
+
+    def handle_nested_attribute(self, instance, validated_data, name, klass):
+        # We want to always create a new related obj, so as not to
+        # surprise-modify other books.
+        data = validated_data.pop(name)
+        nested_obj = klass.objects.filter(**data).first()
+        if not nested_obj:
+            nested_obj = klass.objects.create(**data)
+        setattr(instance, name, nested_obj)
+
+    def update(self, instance, validated_data):
+        self.handle_nested_attribute(
+            instance,
+            validated_data,
+            'author',
+            Author,
+        )
+        self.handle_nested_attribute(
+            instance,
+            validated_data,
+            'publisher',
+            Publisher,
+        )
+        self.handle_nested_attribute(
+            instance,
+            validated_data,
+            'series',
+            Series,
+        )
+        return super().update(instance, validated_data)
 
     class Meta:
         model = Book

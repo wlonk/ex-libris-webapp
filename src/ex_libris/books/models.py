@@ -5,8 +5,9 @@ from django.db import models
 
 from channels import Channel
 
-from taggit.managers import TaggableManager
 from allauth.account.signals import user_signed_up
+from hashid_field import HashidAutoField
+from taggit.managers import TaggableManager
 
 from .utils import (
     get_dropbox_sharing_link,
@@ -21,6 +22,7 @@ for r in range(1980, (datetime.datetime.now().year+1)):
 
 
 class Author(models.Model):
+    id = HashidAutoField(primary_key=True)
     name = models.CharField(
         max_length=256,
         verbose_name='Author Name',
@@ -31,6 +33,7 @@ class Author(models.Model):
 
 
 class Publisher(models.Model):
+    id = HashidAutoField(primary_key=True)
     name = models.CharField(
         max_length=256,
         verbose_name='Publisher Name',
@@ -41,6 +44,7 @@ class Publisher(models.Model):
 
 
 class Series(models.Model):
+    id = HashidAutoField(primary_key=True)
     name = models.CharField(
         max_length=256,
         verbose_name='Series Name',
@@ -58,6 +62,7 @@ class Book(models.Model):
             'year',
         )
 
+    id = HashidAutoField(primary_key=True)
     title = models.CharField(max_length=256)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL)
     author = models.ForeignKey(Author, null=True)
