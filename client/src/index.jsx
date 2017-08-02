@@ -9,7 +9,6 @@ import thunk from 'redux-thunk';
 
 import bookApp from './reducers';
 import App from './components/App';
-import registerServiceWorker from './registerServiceWorker';
 
 
 injectTapEventPlugin();
@@ -39,4 +38,3 @@ render(
   </MuiThemeProvider>,
   document.getElementById('root')
 );
-registerServiceWorker();
