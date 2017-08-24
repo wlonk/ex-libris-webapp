@@ -3,7 +3,7 @@
  - [X] Fix React server config
  - [X] Fix React auth token dance
  - [X] Fix UI stay-logged-in
- - [ ] Restructure settings and core URLs into core app
+ - [X] Restructure settings and core URLs into core app
  - [ ] Clean up client and server repo-root files as much as Heroku assumptions
        will allow
 

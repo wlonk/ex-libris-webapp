@@ -7,9 +7,9 @@ volumes:
 services:
   postgres:
     build: ./compose/postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - postgres_backup:/backups
+    # volumes:
+      # - postgres_data:/var/lib/postgresql/data
+      # - postgres_backup:/backups
     environment:
       - POSTGRES_DB=ex_libris
 

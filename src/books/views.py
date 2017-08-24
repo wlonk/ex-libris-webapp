@@ -52,11 +52,13 @@ class DropboxWebhookView(View):
             ).first()
             # Just make sure we didn't get a false match on some other
             # attribute:
-            right_user = user is not None and user.socialaccount_set.first(
-            ).extra_data.get(
-                'uid',
-                None,
-            ) == user_id
+            right_user = (
+                user is not None
+                and user.socialaccount_set.first().extra_data.get(
+                    'uid',
+                    None,
+                ) == user_id
+            )
             if not right_user:
                 # TODO log warning?
                 continue

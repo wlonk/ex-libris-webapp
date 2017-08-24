@@ -5,11 +5,10 @@
 wheel==0.29.0
 
 # Latest Django
-django==1.11.3
+django==1.11.4
 
 # Configuration
-django-environ==0.4.3
-django-secure==1.0.1
+django-environ==0.4.4
 whitenoise==3.3.0
 
 # Models
@@ -21,10 +20,10 @@ django-hashid-field==1.2.3
 Pillow==4.2.1
 
 # For user registration, either via email or social
-django-allauth==0.32.0
+django-allauth==0.33.0
 
 # Python-PostgreSQL Database Adapter
-psycopg2==2.7.1
+psycopg2==2.7.3
 
 # Time zones support
 pytz==2017.2
@@ -37,7 +36,7 @@ asgi_redis==1.4.2
 django-taggit==0.22.1
 dropbox==8.0.0
 django-filter==1.0.4
-djangorestframework==3.6.3
+djangorestframework==3.6.4
 
 # WSGI Handler
 # ------------------------------------------------

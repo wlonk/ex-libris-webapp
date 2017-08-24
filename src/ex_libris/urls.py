@@ -29,7 +29,7 @@ urlpatterns = [
     url(settings.ADMIN_URL, include(admin.site.urls)),
 
     # User management
-    url(r'^users/', include("ex_libris.users.urls", namespace="users")),
+    url(r'^users/', include("users.urls", namespace="users")),
     url(r'^accounts/', include('allauth.urls')),
     url(
         r'^api-auth/',
@@ -37,7 +37,7 @@ urlpatterns = [
     ),
 
     # Your stuff: custom urls includes go here
-    url(r'^api/', include('ex_libris.books.urls', namespace='api')),
+    url(r'^api/', include('books.urls', namespace='api')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

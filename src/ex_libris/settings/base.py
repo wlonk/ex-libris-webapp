@@ -13,7 +13,7 @@ from __future__ import absolute_import, unicode_literals
 import environ
 
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
-APPS_DIR = ROOT_DIR.path('ex_libris')
+CORE_APP_DIR = ROOT_DIR.path('ex_libris')
 PROJECT_ROOT = ROOT_DIR - 1
 CLIENT_BUILD_DIR = PROJECT_ROOT.path('client/build')
 
@@ -44,9 +44,9 @@ THIRD_PARTY_APPS = (
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
-    'ex_libris.custom_dropbox_oauth2',
-    'ex_libris.users',
-    'ex_libris.books',
+    'custom_dropbox_oauth2',
+    'users',
+    'books',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -65,23 +65,91 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-# MIGRATIONS CONFIGURATION
-# ------------------------------------------------------------------------------
-MIGRATION_MODULES = {
-    'sites': 'ex_libris.contrib.sites.migrations'
-}
-
 # DEBUG
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool("DJANGO_DEBUG", False)
+DEBUG = env.bool('DJANGO_DEBUG', False)
+SECRET_KEY = env("DJANGO_SECRET_KEY")
+HASHID_FIELD_SALT = env("HASHID_FIELD_SALT")
+
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=[])
+
+# LOGGING
+# ------------------------------------------------------------------------------
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'formatters': {
+        'verbose': {
+            'format': (
+                '%(levelname)s %(asctime)s %(module)s '
+                '%(process)d %(thread)d %(message)s'
+            ),
+        },
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True
+        },
+        'django.security.DisallowedHost': {
+            'level': 'ERROR',
+            'handlers': ['console', 'mail_admins'],
+            'propagate': True
+        }
+    }
+}
+
+# HTTPS
+# ------------------------------------------------------------------------------
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = env(
+        'SECURE_PROXY_SSL_HEADER',
+        default=None,
+        cast=lambda v: tuple(v.split(':', 1)) if ':' in v else None
+    )
+    SECURE_HSTS_SECONDS = 60
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
+        'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS',
+        default=True,
+    )
+    SECURE_FRAME_DENY = env.bool('DJANGO_SECURE_FRAME_DENY', default=True)
+    SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
+        'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF',
+        default=True,
+    )
+    SECURE_BROWSER_XSS_FILTER = True
+    SESSION_COOKIE_SECURE = False
+    SESSION_COOKIE_HTTPONLY = True
+    SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = env(
-    'DJANGO_EMAIL_BACKEND',
-    default='django.core.mail.backends.smtp.EmailBackend',
-)
+if not DEBUG:
+    EMAIL_BACKEND = env(
+        'DJANGO_EMAIL_BACKEND',
+        default='django.core.mail.backends.smtp.EmailBackend',
+    )
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # MANAGER CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -96,10 +164,13 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     # Raises ImproperlyConfigured exception if DATABASE_URL not in os.environ
-    'default': env.db("DATABASE_URL", default="postgres:///ex_libris"),
+    'default': env.db('DATABASE_URL', default='postgres:///ex_libris'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
+# REDIS
+# ------------------------------------------------------------------------------
+BROKER_URL = env("REDIS_URL", default='redis://')
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -134,8 +205,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         'DIRS': [
-            str(CLIENT_BUILD_DIR),
-            str(APPS_DIR.path('templates')),
+            CLIENT_BUILD_DIR(),
+            CORE_APP_DIR('templates'),
         ],
         'OPTIONS': {
             # See: https://docs.djangoproject.com/en/dev/ref/settings/
@@ -169,7 +240,7 @@ TEMPLATES = [
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(PROJECT_ROOT.path('collected-static'))
+STATIC_ROOT = PROJECT_ROOT('staticfiles')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
@@ -177,7 +248,7 @@ STATIC_URL = '/static/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/
 #   #std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
-    str(CLIENT_BUILD_DIR.path('static')),
+    CLIENT_BUILD_DIR('static'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/
@@ -190,27 +261,27 @@ STATICFILES_FINDERS = (
 # MEDIA CONFIGURATION
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(APPS_DIR('media'))
+MEDIA_ROOT = str(CORE_APP_DIR('media'))
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
 
 # URL Configuration
 # ------------------------------------------------------------------------------
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'ex_libris.urls'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'ex_libris.wsgi.application'
 
 # CHANNELS CONFIGURATION
 # ------------------------------------------------------------------------------
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "asgi_redis.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [env.str('REDIS_URL', 'redis://localhost:6379')],
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [BROKER_URL],
         },
-        "ROUTING": "ex_libris.books.routing.channel_routing",
+        'ROUTING': 'books.routing.channel_routing',
     },
 }
 
@@ -225,8 +296,8 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_ADAPTER = 'ex_libris.users.adapter.AccountAdapter'
-SOCIALACCOUNT_ADAPTER = 'ex_libris.users.adapter.SocialAccountAdapter'
+ACCOUNT_ADAPTER = 'users.adapter.AccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'users.adapter.SocialAccountAdapter'
 ACCOUNT_ALLOW_REGISTRATION = True
 
 # Custom user app defaults
@@ -246,7 +317,7 @@ DROPBOX_API_SECRET = env.str('DROPBOX_API_SECRET')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'ex_libris.users.authentication.BearerAuthentication',
+        'users.authentication.BearerAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
 }
