@@ -14,9 +14,9 @@ urlpatterns = [
     ),
 
     url(
-        regex=r'^validate_token/$',
-        view=views.UserValidateTokenView.as_view(),
-        name='validate_token',
+        regex=r'^token/$',
+        view=views.UserTokenView.as_view(),
+        name='token',
     ),
 
     # URL pattern for the UserRedirectView

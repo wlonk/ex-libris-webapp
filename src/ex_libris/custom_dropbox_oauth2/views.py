@@ -19,9 +19,12 @@ class DropboxOAuth2Adapter(OAuth2Adapter):
     redirect_uri_protocol = 'http' if settings.DEBUG else 'https'
 
     def complete_login(self, request, app, token, **kwargs):
-        extra_data = requests.get(self.profile_url, params={
-            'access_token': token.token
-        })
+        extra_data = requests.get(
+            self.profile_url,
+            params={
+                'access_token': token.token,
+            },
+        )
 
         # This only here because of weird response from the test suite
         if isinstance(extra_data, list):
@@ -29,7 +32,7 @@ class DropboxOAuth2Adapter(OAuth2Adapter):
 
         return self.get_provider().sociallogin_from_response(
             request,
-            extra_data.json()
+            extra_data.json(),
         )
 
 

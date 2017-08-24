@@ -235,6 +235,8 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'users:redirect'
 LOGIN_URL = '/accounts/dropbox_oauth2/login/'
 
+AUTH_TOKEN_LIFETIME = 60
+
 # Location of root django.contrib.admin URL, use {% url 'admin:index' %}
 ADMIN_URL = r'^admin/'
 

@@ -1,10 +1,10 @@
 # TODO
 
  - [X] Fix React server config
- - [ ] Fix React auth token dance
+ - [X] Fix React auth token dance
+ - [X] Fix UI stay-logged-in
  - [ ] Clean up client and server repo-root files as much as Heroku assumptions
        will allow
- - [ ] Fix UI stay-logged-in
 
  - [ ] Fix styles
  - [ ] Speed up UI (pre-AJAX changes, undo on error)

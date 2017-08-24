@@ -15,8 +15,10 @@ class DropboxOAuth2Provider(OAuth2Provider):
         return data['uid']
 
     def extract_common_fields(self, data):
-        return dict(name=data.get('display_name'),
-                    email=data.get('email'))
+        return {
+            'name': data.get('display_name'),
+            'email': data.get('email'),
+        }
 
 
 provider_classes = [DropboxOAuth2Provider]
