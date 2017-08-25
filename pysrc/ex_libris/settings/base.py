@@ -15,7 +15,7 @@ import environ
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 CORE_APP_DIR = ROOT_DIR.path('ex_libris')
 PROJECT_ROOT = ROOT_DIR - 1
-CLIENT_BUILD_DIR = PROJECT_ROOT.path('client/build')
+CLIENT_BUILD_DIR = PROJECT_ROOT.path('build')
 
 env = environ.Env()
 

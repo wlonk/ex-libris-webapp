@@ -30,7 +30,7 @@ services:
       context: .
       dockerfile: ./compose/js/Dockerfile
     volumes:
-      - ./client:/app
+      - ./:/app
 
   nginx:
     build: ./compose/nginx
@@ -38,7 +38,7 @@ services:
       - django
       - js
     volumes:
-      - ./client/build:/web
+      - ./build:/web
     ports:
       - "0.0.0.0:80:80"
 

@@ -35,6 +35,7 @@ nosetests.xml
 npm-debug.log*
 pip-log.txt
 sftp-config.json
+staticfiles/
 tests/.hitch
 yarn-debug.log*
 yarn-error.log*
