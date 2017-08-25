@@ -1,12 +1,5 @@
 # TODO
 
- - [X] Fix React server config
- - [X] Fix React auth token dance
- - [X] Fix UI stay-logged-in
- - [X] Restructure settings and core URLs into core app
- - [ ] Clean up client and server repo-root files as much as Heroku assumptions
-       will allow
-
  - [ ] Fix styles
  - [ ] Speed up UI (pre-AJAX changes, undo on error)
  - [ ] Show errors in Material Snackbar
