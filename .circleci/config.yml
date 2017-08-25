@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/ex_libris
+    docker:
+      - image: python:3.6.0
+    steps:
+      - checkout
+  test:
+    docker:
+      - image: python:3.6.0
+    steps:
+      - checkout
+      - run:
+          name: Placeholder
+          command: echo "done"

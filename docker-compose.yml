@@ -1,42 +1,46 @@
-postgres:
-  image: postgres:9.5
-  volumes:
-    - /data/ex-libris/postgres:/var/lib/postgresql/data
-  env_file: .env
+version: '3'
 
-django:
-  build: .
-  user: django
-  links:
-    - postgres
-    - redis
-  command: /gunicorn.sh
-  env_file: .env
+volumes:
+  postgres_data: {}
+  postgres_backup: {}
 
-nginx:
-  build: ./compose/nginx
-  links:
-    - django
-  ports:
-    - "0.0.0.0:80:80"
+services:
+  postgres:
+    build: ./compose/postgres
+    # volumes:
+      # - postgres_data:/var/lib/postgresql/data
+      # - postgres_backup:/backups
+    environment:
+      - POSTGRES_DB=ex_libris
 
-redis:
-  image: redis:3.0
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    depends_on:
+      - postgres
+      - redis
+    command: /start-dev.sh
+    env_file: .env
+    volumes:
+      - .:/app
 
-celeryworker:
-  build: .
-  user: django
-  env_file: .env
-  links:
-   - postgres
-   - redis
-  command: celery -A ex_libris.taskapp worker -l INFO
+  js:
+    build:
+      context: .
+      dockerfile: ./compose/js/Dockerfile
+    volumes:
+      - ./client:/app
 
-celerybeat:
-  build: .
-  user: django
-  env_file: .env
-  links:
-    - postgres
-    - redis
-  command: celery -A ex_libris.taskapp beat -l INFO
+  nginx:
+    build: ./compose/nginx
+    depends_on:
+      - django
+      - js
+    volumes:
+      - ./client/build:/web
+    ports:
+      - "0.0.0.0:80:80"
+
+  redis:
+    image: redis:3.0

@@ -1,0 +1,24 @@
+from allauth.socialaccount.providers.base import ProviderAccount
+from allauth.socialaccount.providers.oauth2.provider import OAuth2Provider
+
+
+class DropboxOAuth2Account(ProviderAccount):
+    pass
+
+
+class DropboxOAuth2Provider(OAuth2Provider):
+    id = 'custom_dropbox_oauth2'
+    name = 'Dropbox'
+    account_class = DropboxOAuth2Account
+
+    def extract_uid(self, data):
+        return data['uid']
+
+    def extract_common_fields(self, data):
+        return {
+            'name': data.get('display_name'),
+            'email': data.get('email'),
+        }
+
+
+provider_classes = [DropboxOAuth2Provider]

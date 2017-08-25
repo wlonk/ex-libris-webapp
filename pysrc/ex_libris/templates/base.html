@@ -1,0 +1,148 @@
+{% load staticfiles i18n socialaccount %}<!DOCTYPE html>
+<html lang="en" ng-app>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}ex-libris{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    {% block css %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+    <!-- Your stuff: Third-party css libraries go here -->
+    <link href='//fonts.googleapis.com/css?family=Lora:bold|Roboto:300,300italic,400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static "octicons/octicons.css" %}">
+    <link href="{% static 'css/bootstrap-editable.css' %}" rel="stylesheet">
+
+    {% block css_extra %}
+    {% endblock css_extra %}
+
+    <!-- This file store project specific CSS -->
+    <link href="{% static 'css/project.css' %}" rel="stylesheet">
+    {% endblock %}
+  </head>
+
+  <body>
+
+    <div class="m-b">
+      <nav class="navbar navbar-dark navbar-static-top navbar-full bg-inverse">
+        <div class="container">
+          <a class="navbar-brand" href="{% url "home" %}">
+            <img src="{% static "images/logo-header.png" %}" alt="Ex Libris">
+            <span class="release">βeta</span>
+          </a>
+          <button type="button" class="navbar-toggler hidden-sm-up pull-xs-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+            &#9776;
+          </button>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-toggleable-xs" id="bs-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'books:list' %}">Books</a>
+              </li>
+              {% endif %}
+              {% block navbar_extra %}
+              {% endblock navbar_extra %}
+            </ul>
+
+            <ul class="nav navbar-nav pull-xs-right">
+              {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">@{{ request.user.username }}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'account_logout' %}">(logout)</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a id="log-in-link" class="nav-link" href="{% provider_login_url "dropbox_oauth2" process="login" %}">
+                    {% trans "Log in via" %}
+                    <img class="inline-image" alt="Dropbox" src="{% static "images/dropbox_glyph_blue.png" %}">
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div id="body-container" class="container">
+
+      {% if messages %}
+          {% for message in messages %}
+              <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+          {% endfor %}
+      {% endif %}
+
+      {% block content %}
+      <div class="jumbotron text-xs-center">
+        <img src="{% static "images/logo-main.png" %}" class="img-rounded center-block" alt="Ex Libris logo">
+        <p class="lead">
+          Manage your library, right from your Dropbox.
+        </p>
+        <p>
+          <a href="{% provider_login_url "custom_dropbox_oauth2" process="login" %}" class="btn btn-lg btn-primary" role="button">Log in via Dropbox</a>
+        </p>
+        <div class="row">
+          <p class="col-sm-6 col-sm-offset-3">
+          <small class="text-muted">
+            Right now, we're in beta, and only can
+            deal with PDF files in Dropbox. Sorry!
+            We're working on expanding and improving
+            what we offer, though.
+          </small>
+          </p>
+        </div>
+      </div>
+      {% endblock content %}
+    </div> <!-- /container -->
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted small">
+        &copy; 2016 Transneptune Games
+        &bull; <a href="{% url "about" %}">About</a>
+        &bull; <a href="{% url "privacy" %}">Privacy</a>
+        </p>
+      </div>
+    </footer>
+
+    {% block modal %}{% endblock modal %}
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    {% block javascript %}
+      <!-- Latest JQuery -->
+      <script src="{% static 'js/jquery.min.js' %}"></script>
+
+      <!-- Tether - a requirement for Bootstrap tooltips -->
+      <script src="{% static 'js/tether.min.js' %}"></script>
+
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="{% static 'js/bootstrap.js' %}"></script>
+
+      <!-- Your stuff: Third-party javascript libraries go here -->
+      <script src="{% static 'js/bootstrap-editable.js' %}"></script>
+      <script src="{% static 'js/typeahead.bundle.js' %}"></script>
+      <script src="{% static 'js/typeaheadjs.10x.js' %}"></script>
+
+      {% block javascript_extra %}
+      {% endblock javascript_extra %}
+
+      <!-- place project specific Javascript in this file -->
+      <script src="{% static 'js/project.js' %}"></script>
+    {% endblock javascript %}
+  </body>
+</html>
