@@ -6,6 +6,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { configure } from 'redux-auth';
 import thunk from 'redux-thunk';
+import './css/index.css';
 
 import bookApp from './reducers';
 import App from './components/App';
