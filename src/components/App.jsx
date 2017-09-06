@@ -8,31 +8,22 @@ import { SignOutButton } from "redux-auth/material-ui-theme";
 import { getBooks } from '../actions';
 import BookList from './BookList';
 
-const styles = {
-  headerNav: {
-    color: '#f4f2ef',
-    backgroundColor: '#3d3a35'
-  },
-  headerButton: {
-    marginTop: '5px',
-    backgroundColor: '#f4f2ef'
-  }
-};
+import '../css/index.scss';
 
 
 let App = ({ dispatch, auth }) => {
   dispatch(getBooks());
   const isSignedIn = auth.getIn(["user", "isSignedIn"]);
   const authButton = isSignedIn
-    ? <SignOutButton style={styles.headerButton} />
-    : <OAuthSignInButton provider="dropbox" style={styles.headerButton} />;
+    ? <SignOutButton />
+    : <OAuthSignInButton provider="dropbox" />;
   return (
     <div>
       <AuthGlobals />
       <AppBar
         title="Ex Libris"
         iconElementRight={authButton}
-        style={styles.headerNav}
+        className="headerNav"
       />
       <BookList />
     </div>

@@ -137,6 +137,7 @@ module.exports = {
           /\.html$/,
           /\.(js|jsx)$/,
           /\.css$/,
+          /\.scss$/,
           /\.json$/,
           /\.bmp$/,
           /\.gif$/,
@@ -209,6 +210,19 @@ module.exports = {
       },
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "file" loader exclusion list.
+      {
+        test: /\.scss$/,
+        use: [{
+          loader: require.resolve('style-loader') // creates style nodes from JS strings
+        }, {
+          loader: require.resolve('css-loader'), // translates CSS into CommonJS
+          options: {
+            importLoaders: 1,
+          },
+        }, {
+          loader: require.resolve('sass-loader') // compiles Sass to CSS
+        }]
+      },
     ],
   },
   plugins: [
