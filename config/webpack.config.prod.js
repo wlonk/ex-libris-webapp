@@ -219,7 +219,16 @@ module.exports = {
       {
         test: /\.scss$/,
         include: paths.appSrc,
-        loaders: ["style", "css", "sass"]
+        use: [{
+          loader: require.resolve('style-loader') // creates style nodes from JS strings
+        }, {
+          loader: require.resolve('css-loader'), // translates CSS into CommonJS
+          options: {
+            importLoaders: 1,
+          },
+        }, {
+          loader: require.resolve('sass-loader') // compiles Sass to CSS
+        }]
       },
     ],
   },
