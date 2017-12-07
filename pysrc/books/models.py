@@ -7,12 +7,20 @@ from channels import Channel
 
 from allauth.account.signals import user_signed_up
 from hashid_field import HashidAutoField
-from taggit.managers import TaggableManager
+from taggit.managers import (
+    TaggableManager,
+    TaggableRel,
+)
 
 from .utils import (
     get_dropbox_sharing_link,
     build_kwargs_for_sync_dropbox,
 )
+
+
+# Until this issue is resolved:
+# https://github.com/alex/django-taggit/issues/497
+TaggableRel.related_query_name = None
 
 
 YEAR_CHOICES = []
