@@ -64,10 +64,17 @@ class Book(models.Model):
 
     id = HashidAutoField(primary_key=True)
     title = models.CharField(max_length=256)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
-    author = models.ForeignKey(Author, null=True)
-    publisher = models.ForeignKey(Publisher, null=True)
-    series = models.ForeignKey(Series, null=True)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    author = models.ForeignKey(Author, null=True, on_delete=models.CASCADE)
+    publisher = models.ForeignKey(
+        Publisher,
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    series = models.ForeignKey(Series, null=True, on_delete=models.CASCADE)
     edition = models.CharField(max_length=128, blank=True)
     year = models.IntegerField(
         choices=YEAR_CHOICES,
