@@ -5,6 +5,7 @@ from rest_framework import routers
 from . import views
 
 
+app_name = 'books'
 urlpatterns = [
     # TODO: something about this:
     url(

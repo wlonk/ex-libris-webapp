@@ -7,12 +7,20 @@ from channels import Channel
 
 from allauth.account.signals import user_signed_up
 from hashid_field import HashidAutoField
-from taggit.managers import TaggableManager
+from taggit.managers import (
+    TaggableManager,
+    TaggableRel,
+)
 
 from .utils import (
     get_dropbox_sharing_link,
     build_kwargs_for_sync_dropbox,
 )
+
+
+# Until this issue is resolved:
+# https://github.com/alex/django-taggit/issues/497
+TaggableRel.related_query_name = None
 
 
 YEAR_CHOICES = []
@@ -64,10 +72,17 @@ class Book(models.Model):
 
     id = HashidAutoField(primary_key=True)
     title = models.CharField(max_length=256)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
-    author = models.ForeignKey(Author, null=True)
-    publisher = models.ForeignKey(Publisher, null=True)
-    series = models.ForeignKey(Series, null=True)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    author = models.ForeignKey(Author, null=True, on_delete=models.CASCADE)
+    publisher = models.ForeignKey(
+        Publisher,
+        null=True,
+        on_delete=models.CASCADE,
+    )
+    series = models.ForeignKey(Series, null=True, on_delete=models.CASCADE)
     edition = models.CharField(max_length=128, blank=True)
     year = models.IntegerField(
         choices=YEAR_CHOICES,

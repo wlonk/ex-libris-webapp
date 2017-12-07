@@ -10,7 +10,7 @@ from django.core.signing import (
     BadSignature,
     SignatureExpired,
 )
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.views.generic import (
     DetailView,
     ListView,
